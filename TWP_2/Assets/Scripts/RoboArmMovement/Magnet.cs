@@ -12,7 +12,7 @@ public class Magnet : MonoBehaviour
     {
         if (other.gameObject.tag == "Object")
         {
-            armController.stuckObject = other.gameObject;
+            armController.SetStuckObject(other.gameObject);
             other.gameObject.transform.parent = parent.transform;
             Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
             rb.useGravity = false;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,14 @@ using UnityEngine.UI;
 
 public class ArmController : MonoBehaviour
 {
+
     [SerializeField]
     public GameObject stuckObject;
+
+    public Transform floor;
+
+    [SerializeField]
+    public bool isHeuristic = true;
 
     public Slider baseSlider;
     public Slider lowerArmSlider;
@@ -67,10 +74,17 @@ public class ArmController : MonoBehaviour
 
     void CheckInput()
     {
-        baseSliderValue = baseSlider.value;
-        lowerArmSliderValue = lowerArmSlider.value;
-        upperArmSliderValue = upperArmSlider.value;
-        neckHingeSliderValue = neckHingeSlider.value;
+        if (isHeuristic)
+        {
+            baseSliderValue = baseSlider.value;
+            lowerArmSliderValue = lowerArmSlider.value;
+            upperArmSliderValue = upperArmSlider.value;
+            neckHingeSliderValue = neckHingeSlider.value;
+        } 
+        else
+        {
+            // Set values from continous array
+        }
     }
 
     void ProcessMovement()
@@ -92,6 +106,11 @@ public class ArmController : MonoBehaviour
         robotNeckHinge.localEulerAngles = new Vector3(neckHingeXRot, robotNeckHinge.localEulerAngles.y, robotNeckHinge.localEulerAngles.z);
     }
 
+    private void RotateBase(float val)
+    {
+
+    }
+
     public void ResetSliders()
     {
         baseSliderValue = 0f;
@@ -103,5 +122,11 @@ public class ArmController : MonoBehaviour
         lowerArmSlider.value = 0f;
         upperArmSlider.value = 0f;
         neckHingeSlider.value = 0f;
+    }
+
+    public void SetStuckObject(GameObject obj)
+    {
+        floor.tag = "Ground";
+        stuckObject = obj;
     }
 }
