@@ -6,7 +6,8 @@ using UnityEngine;
 
 public class EnvironmentManager : MonoBehaviour
 {
-    private List<GameObject> activeObjects = new List<GameObject>();
+    [SerializeField]
+    public List<GameObject> activeObjects = new List<GameObject>();
 
     /*
     void Update()
