@@ -28,6 +28,11 @@ public class ArmMovementAgent : Agent
         // transform.localPosition = new Vector3(Random.Range(-4f, -1f), 1, Random.Range(-1.5f, 1.5f));
         // goalTransform.localPosition = new Vector3(Random.Range(4f, 1f), 1, Random.Range(-1.5f, 1.5f));
         transform.localPosition = new Vector3(0, 55, 0);
+        /*
+        Vector3 spawnPosition = Random.insideUnitCircle.normalized;
+        spawnPosition *= Random.Range(GameManager.inst.MinDist, GameManager.inst.MaxDist);
+        goalTransform.localPosition = new Vector3(spawnPosition.x, 3f, spawnPosition.y);
+        */
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -57,7 +62,7 @@ public class ArmMovementAgent : Agent
         if (other.gameObject.tag == "Object")
         {
             Debug.Log("Win");
-            SetReward(+1f);
+            AddReward(+1f);
             floorMeshRenderer.material = winMat;
             EndEpisode();
         }
