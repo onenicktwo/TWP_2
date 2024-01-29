@@ -8,6 +8,7 @@ TagManager:
   - Wall
   - Object
   - Ground
+  - GoalMat
   layers:
   - Default
   - TransparentFX
