@@ -29,7 +29,7 @@ public class HomeRunProbabilityController : MonoBehaviour
             BatStatisticsController batStatistics = batstats.GetComponent<BatStatisticsController>();
             if(batStatistics != null)
             {
-                batStatistics.IncrementHomeRun();
+                batStatistics.regularHit();
                 batStatistics.IncrementAtBat();
             }
 
