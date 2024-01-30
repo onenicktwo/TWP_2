@@ -13,7 +13,7 @@ public class StaticDragDrop : Agent
     [SerializeField] private EnvironmentManager envManager;
     [SerializeField] private Transform goalTransform;
     [SerializeField] private float moveSpeed = 1f;
-    [SerializeField] private float pickUpRange = 1.5f; // Range within which the agent can pick up objects
+    [SerializeField] private float pickUpRange = 1.5f; 
     private GameObject objectInHand;
 
     public override void OnEpisodeBegin()
@@ -66,17 +66,17 @@ public class StaticDragDrop : Agent
         {
             //PickUpObject(other.gameObject);
         }
-        else if (other.gameObject.CompareTag("GoalMat") && objectInHand != null)
+        else if (other.gameObject.CompareTag("Goal") && objectInHand != null)
         {
             AddReward(+1f);
             floorMeshRenderer.material = winMat;
-            EndEpisode();
+            //EndEpisode();
         }
         else if (other.gameObject.CompareTag("Wall"))
         {
             SetReward(-1f);
             floorMeshRenderer.material = failMat;
-            EndEpisode();
+            //EndEpisode();
         }
     }
 
