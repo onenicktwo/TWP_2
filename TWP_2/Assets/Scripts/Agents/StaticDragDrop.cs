@@ -5,8 +5,11 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 
+
 public class StaticDragDrop : Agent
 {
+
+
     [SerializeField] private Material winMat;
     [SerializeField] private Material failMat;
     [SerializeField] private MeshRenderer floorMeshRenderer;
@@ -15,11 +18,11 @@ public class StaticDragDrop : Agent
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float pickUpRange = 1.5f; 
     private GameObject objectInHand;
+    
 
     public override void OnEpisodeBegin()
     {
         transform.localPosition = new Vector3(0, 55, 0);
-        ResetObjects();
     }
 
     private void ResetObjects()
@@ -64,19 +67,19 @@ public class StaticDragDrop : Agent
     {
         if (other.gameObject.CompareTag("Object") && objectInHand == null)
         {
-            //PickUpObject(other.gameObject);
+            AddReward(+1f);
         }
-        else if (other.gameObject.CompareTag("Goal") && objectInHand != null)
+        else if (objectInHand.GetComponent<Object>().isTouchingGoal==true)
         {
             AddReward(+1f);
             floorMeshRenderer.material = winMat;
-            //EndEpisode();
+            EndEpisode();
         }
         else if (other.gameObject.CompareTag("Wall"))
         {
-            SetReward(-1f);
+            AddReward(-.5f);
             floorMeshRenderer.material = failMat;
-            //EndEpisode();
+            EndEpisode();
         }
     }
 

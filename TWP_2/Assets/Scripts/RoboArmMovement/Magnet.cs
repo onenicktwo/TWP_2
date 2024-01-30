@@ -6,9 +6,7 @@ public class Magnet : MonoBehaviour
 {
     public ArmController armController;
     public GameObject parent;
-    
     public bool isPickedUp = false;
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Object")
@@ -16,9 +14,14 @@ public class Magnet : MonoBehaviour
             isPickedUp=true;
             armController.SetStuckObject(other.gameObject);
             other.gameObject.transform.parent = parent.transform;
+            Debug.Log(parent.transform);
             Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();
             rb.useGravity = false;
             rb.constraints = RigidbodyConstraints.FreezeAll;
         }
+       
+
+
+
     }
 }

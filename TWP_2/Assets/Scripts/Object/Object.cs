@@ -6,7 +6,11 @@ public class Object : MonoBehaviour
 {
     private float timer = 0.0f;
     public float timerDuration = 3.0f;  // Adjust the duration as needed
+    public bool isTouchingGoal = false; 
+    public GameObject goal;
+    public StaticDragDrop staticDragDrop;
 
+    
     private void Start()
     {
         timer = timerDuration;
@@ -24,5 +28,15 @@ public class Object : MonoBehaviour
                 Debug.Log("End");
             }
         }
+    }
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+      if (other.gameObject == goal)
+        {
+            isTouchingGoal = true;
+        }
+
     }
 }
