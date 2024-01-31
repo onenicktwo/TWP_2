@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Magnet : MonoBehaviour
 {
-    public ArmController armController;
+   // public ArmController armController;
     public GameObject parent;
     public bool isPickedUp = false;
     private void OnTriggerEnter(Collider other)
@@ -12,7 +12,8 @@ public class Magnet : MonoBehaviour
         if (other.gameObject.tag == "Object")
         {
             isPickedUp=true;
-            armController.SetStuckObject(other.gameObject);
+            Debug.Log("opsghislbngv");
+            //armController.SetStuckObject(other.gameObject);
             other.gameObject.transform.parent = parent.transform;
             Debug.Log(parent.transform);
             Rigidbody rb = other.gameObject.GetComponent<Rigidbody>();

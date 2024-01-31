@@ -5,35 +5,33 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 
-
 public class StaticDragDrop : Agent
 {
-
-
     [SerializeField] private Material winMat;
     [SerializeField] private Material failMat;
     [SerializeField] private MeshRenderer floorMeshRenderer;
     [SerializeField] private EnvironmentManager envManager;
     [SerializeField] private Transform goalTransform;
     [SerializeField] private float moveSpeed = 1f;
-    [SerializeField] private float pickUpRange = 1.5f; 
+    [SerializeField] private float pickUpRange = 1.5f;
     private GameObject objectInHand;
-    
+    private Vector3 originalObjectPosition; 
+    private bool objectMoved = false; 
+
+    public GameObject Object;
+    public GameObject EnvironmentObject;
 
     public override void OnEpisodeBegin()
     {
-        transform.localPosition = new Vector3(0, 55, 0);
+        transform.localPosition = new Vector3(0, 54, 0);
+        Object.gameObject.transform.parent = EnvironmentObject.transform;
+        Object.transform.localPosition = new Vector3(0, 3, -39.5f);
+        originalObjectPosition = Object.transform.localPosition;
     }
 
     private void ResetObjects()
     {
         goalTransform.localPosition = new Vector3(Random.Range(4f, 1f), 1, Random.Range(-1.5f, 1.5f));
-
-        if (objectInHand != null)
-        {
-            Destroy(objectInHand);
-            objectInHand = null;
-        }
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -67,9 +65,9 @@ public class StaticDragDrop : Agent
     {
         if (other.gameObject.CompareTag("Object") && objectInHand == null)
         {
-            AddReward(+1f);
+            AddReward(+0.50f);
         }
-        else if (objectInHand.GetComponent<Object>().isTouchingGoal==true)
+        else if (objectInHand != null && objectInHand.GetComponent<Object>().isTouchingGoal == true)
         {
             AddReward(+1f);
             floorMeshRenderer.material = winMat;
@@ -77,11 +75,22 @@ public class StaticDragDrop : Agent
         }
         else if (other.gameObject.CompareTag("Wall"))
         {
-            AddReward(-.5f);
+            AddReward(-0.75f);
             floorMeshRenderer.material = failMat;
             EndEpisode();
         }
+
+        if (other.gameObject.CompareTag("Object") && !objectMoved)
+        {
+            float distanceMoved = Vector3.Distance(originalObjectPosition, other.transform.localPosition);
+            float rewardPerMovement = 0.01f;
+            float maxReward = 0.5f;
+
+            float movementReward = Mathf.Min(distanceMoved * rewardPerMovement, maxReward);
+            if (distanceMoved>=10f){
+            AddReward(movementReward);}
+
+            objectMoved = true; 
+        }
     }
-
-
 }
