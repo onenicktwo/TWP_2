@@ -1,0 +1,47 @@
+{
+    "RobotArm": {
+        "checkpoints": [
+            {
+                "steps": 499973,
+                "file_path": "results\\StaticDragDrop\\RobotArm\\RobotArm-499973.onnx",
+                "reward": -0.5,
+                "creation_time": 1706672202.3835976,
+                "auxillary_file_paths": [
+                    "results\\StaticDragDrop\\RobotArm\\RobotArm-499973.pt"
+                ]
+            },
+            {
+                "steps": 500037,
+                "file_path": "results\\StaticDragDrop\\RobotArm\\RobotArm-500037.onnx",
+                "reward": -0.5,
+                "creation_time": 1706672202.4337056,
+                "auxillary_file_paths": [
+                    "results\\StaticDragDrop\\RobotArm\\RobotArm-500037.pt"
+                ]
+            },
+            {
+                "steps": 500037,
+                "file_path": "results\\StaticDragDrop\\RobotArm\\RobotArm-500037.onnx",
+                "reward": null,
+                "creation_time": 1706672323.5186913,
+                "auxillary_file_paths": [
+                    "results\\StaticDragDrop\\RobotArm\\RobotArm-500037.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 500037,
+            "file_path": "results\\StaticDragDrop\\RobotArm.onnx",
+            "reward": null,
+            "creation_time": 1706672323.5186913,
+            "auxillary_file_paths": [
+                "results\\StaticDragDrop\\RobotArm\\RobotArm-500037.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.1.2+cu118"
+    }
+}
