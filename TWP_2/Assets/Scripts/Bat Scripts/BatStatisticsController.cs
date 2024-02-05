@@ -6,40 +6,33 @@ using TMPro;
 
 public class BatStatisticsController : MonoBehaviour
 {
-    public int totalHomeRuns = 0;
+    public int totalHits = 0;
     public int totalScore = 0;
     public int totalBats = 0;
-    public TextMeshProUGUI totalHomeRun;
+    public TextMeshProUGUI totalHitsText;
     public TextMeshProUGUI totalAtBat;
-    public TextMeshProUGUI homeRunPercentage;
+    public TextMeshProUGUI hitPercentage;
     public TextMeshProUGUI Score;
-
 
     public void IncrementAtBat() {
         totalBats++;
         UpdateUI();
     }
 
-    public void IncrementHomeRun() {
-        totalHomeRuns++;
-        totalScore += 10;
-        UpdateUI();
-    }
-
-    public void regularHit()
-    {
+    public void IncrementHit() {
+        totalHits++;
         totalScore += 5;
         UpdateUI();
     }
 
     private void UpdateUI() {
-        totalHomeRun.text = totalHomeRuns + " Home Runs";
+        totalHitsText.text = totalHits + " Hits";
         totalAtBat.text = totalBats + " Swings";
-        homeRunPercentage.text = CalculateHomeRunPercentage() + "% Likely To Hit An Homerun";
+        hitPercentage.text = CalculateHitPercentage() + "% Hit Rate";
         Score.text = totalScore + " Points";
     }
 
-    private float CalculateHomeRunPercentage() {
-        return totalBats > 0 ? (float)totalHomeRuns / totalBats * 100 : 0;
+    private float CalculateHitPercentage() {
+        return totalBats > 0 ? (float)totalHits / totalBats * 100 : 0;
     }
 }

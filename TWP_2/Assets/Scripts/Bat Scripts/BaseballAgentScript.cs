@@ -10,16 +10,13 @@ public class BaseballAgent : Agent
     public Rigidbody ballRigidbody;
     public Transform batTransform;
 
-    public RayPerceptionSensor raySensor;
-
-    // Parameters for swing dynamics
-    public float minForce = 10f;
-    public float maxForce = 20f;
-    public float maxAngle = 45f;
-    public float swingDelay = 0.5f;  // Delay before the swing
-
-    private float pitchSpeed;
-    private string pitchType;
+    public float swingForce = 15f; // Fixed force for simplicity
+    public float distanceRewardMultiplier = 0.1f;
+    public float maxDistanceReward = 1.0f;
+    public Vector3 optimalDirection = Vector3.forward; // Assuming forward is the optimal hit direction
+    public float directionRewardMultiplier = 1.0f;
+    public float trackingErrorPenalty = 0.01f;
+    public float timingReward = 1.0f;
 
     public override void OnEpisodeBegin()
     {
@@ -28,49 +25,27 @@ public class BaseballAgent : Agent
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        // Ball's position and velocity relative to the bat
         sensor.AddObservation(batTransform.InverseTransformPoint(ballRigidbody.position));
         sensor.AddObservation(batTransform.InverseTransformDirection(ballRigidbody.velocity));
-        sensor.AddObservation(pitchSpeed);
-        sensor.AddObservation(ConvertPitchTypeToNumeric(pitchType));
-    }
-
-    private float ConvertPitchTypeToNumeric(string type)
-    {
-        switch(type)
-        {
-            case "fastball": return 0f;
-            case "curveball": return 1f;
-            case "slider": return 2f;
-            default: return -1f;
-        }
     }
 
     public override void OnActionReceived(ActionBuffers actionBuffers)
     {
         var continuousActions = actionBuffers.ContinuousActions;
-        float swingPower = continuousActions[0];
-        float swingAngle = continuousActions[1];
-        float swingSpeed = continuousActions[2];
-        
-        
-        AdjustBat(swingSpeed);
-        SwingBat(swingPower, swingAngle);
-        ApplyRewards();
+        float swingDelay = continuousActions[0]; // Assuming the first action is a delay time before swinging
+        SwingBat(swingDelay);
     }
 
-    private void SwingBat(float power, float angle)
+    private void SwingBat(float delay)
     {
-        float forceMagnitude = Mathf.Lerp(minForce, maxForce, (power + 1) / 2);
-        Vector3 swingForce = transform.forward * forceMagnitude;
-        Quaternion swingRotation = Quaternion.Euler(0, angle * maxAngle, 0);
-
-        StartCoroutine(ApplySwing(swingRotation, swingForce));
+        Vector3 swingDirection = transform.forward * swingForce;
+        Quaternion batOrientation = Quaternion.Euler(0, 0, 0); // No angle adjustment needed for simplification
+        StartCoroutine(ApplySwing(batOrientation, swingDirection, delay));
     }
 
-    private IEnumerator ApplySwing(Quaternion rotation, Vector3 force)
+    private IEnumerator ApplySwing(Quaternion rotation, Vector3 force, float delay)
     {
-        yield return new WaitForSeconds(swingDelay);
+        yield return new WaitForSeconds(delay); // Use the action to determine delay
 
         batRigidbody.MoveRotation(rotation);
         batRigidbody.AddForce(force, ForceMode.Impulse);
@@ -80,27 +55,62 @@ public class BaseballAgent : Agent
     {
         batRigidbody.velocity = Vector3.zero;
         batRigidbody.angularVelocity = Vector3.zero;
-        // Additional reset logic for ball and game environment
+        ballRigidbody.velocity = Vector3.zero;
+        ballRigidbody.angularVelocity = Vector3.zero;
+
+        // Reposition bat and ball to their initial positions for the next episode
+        batTransform.position = new Vector3(0, 1, 0); // Example starting position
+        ballRigidbody.position = new Vector3(0, 1, 5); // Example starting position for the ball
     }
 
-    private void ApplyRewards()
+    void OnCollisionEnter(Collision collision)
     {
-        // Reward logic based on game outcomes
+        if (collision.gameObject.CompareTag("Ball"))
+        {
+            // Example reward calculations (these functions need to be implemented based on your game's logic)
+            float distance = Vector3.Distance(ballRigidbody.position, batTransform.position); // Simplified distance calculation
+            AddReward(CalculateDistanceReward(distance));
+
+            Vector3 hitDirection = (collision.transform.position - batTransform.position).normalized;
+            AddReward(CalculateDirectionReward(hitDirection));
+
+            EndEpisode();
+        }
+        else
+        {
+            AddReward(-0.1f);
+        }
     }
 
-    public void SetPitchData(float speed, string type)
+    public float CalculateDistanceReward(float distance)
     {
-        pitchSpeed = speed;
-        pitchType = type;
+        return Mathf.Clamp(distance * distanceRewardMultiplier, 0, maxDistanceReward);
     }
 
-    private void AdjustRoboticArmBehavior()
+    public float CalculateDirectionReward(Vector3 hitDirection)
     {
-
+        float angle = Vector3.Angle(optimalDirection, hitDirection);
+        return Mathf.Max(0, (180 - angle) / 180 * directionRewardMultiplier);
     }
 
-    private void AdjustBat(float speed)
+    public float CalculateTrackingReward(Vector3 ballPosition, Vector3 batPosition)
     {
+        float alignmentError = Vector3.Distance(ballPosition, batPosition);
+        return Mathf.Max(0, 1 - alignmentError * trackingErrorPenalty);
+    }
 
+    public float CalculateTimingReward(float swingTime, float optimalTimeWindowStart, float optimalTimeWindowEnd)
+    {
+        if (swingTime >= optimalTimeWindowStart && swingTime <= optimalTimeWindowEnd)
+        {
+            return timingReward;
+        }
+        return 0; // No reward for swinging outside the optimal window
+    }
+
+    public override void Heuristic(in ActionBuffers actionsOut)
+    {
+        var continuousActionsOut = actionsOut.ContinuousActions;
+        continuousActionsOut[0] = Input.GetKey(KeyCode.Space) ? 1.0f : 0.0f; // Example: Press space to simulate ideal swing timing
     }
 }

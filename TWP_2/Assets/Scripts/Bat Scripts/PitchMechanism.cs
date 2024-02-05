@@ -13,9 +13,7 @@ public class PitchMechanism : MonoBehaviour
 
         float speedVariation = Random.Range(-2f, 2f);
         float angleVariation = Random.Range(-5f, 5f);
-        float pitchSpeed = CalculatePitchSpeed(rb.velocity);
 
-        
         switch(pitchType)
         {
             case "fastball":
@@ -29,11 +27,5 @@ public class PitchMechanism : MonoBehaviour
                 break;
         }
 
-        baseballAgent?.SetPitchData(pitchSpeed, pitchType);
-    }
-
-    private float CalculatePitchSpeed(Vector3 velocity)
-    {
-        return velocity.magnitude;
     }
 }
