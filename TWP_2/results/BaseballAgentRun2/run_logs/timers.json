@@ -1,0 +1,42 @@
+{
+    "name": "root",
+    "metadata": {
+        "timer_format_version": "0.1.0",
+        "start_time_seconds": "1707217783",
+        "python_version": "3.9.18 (main, Aug 24 2023, 18:16:58) \n[Clang 15.0.0 (clang-1500.1.0.2.5)]",
+        "command_line_arguments": "/Users/great/TWP_2/TWP_2/venv/bin/mlagents-learn config/trainer_config.yaml --run-id=BaseballAgentRun2 --train",
+        "mlagents_version": "0.30.0",
+        "mlagents_envs_version": "0.30.0",
+        "communication_protocol_version": "1.5.0",
+        "pytorch_version": "1.10.0",
+        "numpy_version": "1.19.5",
+        "end_time_seconds": "1707217847"
+    },
+    "total": 63.94027254200002,
+    "count": 1,
+    "self": 0.02801183300003629,
+    "children": {
+        "run_training.setup": {
+            "total": 0.15595487499999194,
+            "count": 1,
+            "self": 0.15595487499999194
+        },
+        "TrainerController.start_learning": {
+            "total": 63.75630583399999,
+            "count": 1,
+            "self": 0.0007588759999919148,
+            "children": {
+                "TrainerController._reset_env": {
+                    "total": 63.754767292,
+                    "count": 1,
+                    "self": 63.754767292
+                },
+                "TrainerController._save_models": {
+                    "total": 0.0007796659999996791,
+                    "count": 1,
+                    "self": 0.0007796659999996791
+                }
+            }
+        }
+    }
+}
