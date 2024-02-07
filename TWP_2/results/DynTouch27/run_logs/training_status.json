@@ -1,0 +1,47 @@
+{
+    "RobotArm": {
+        "checkpoints": [
+            {
+                "steps": 499914,
+                "file_path": "results\\DynTouch27\\RobotArm\\RobotArm-499914.onnx",
+                "reward": 33388.108072916664,
+                "creation_time": 1707345753.773379,
+                "auxillary_file_paths": [
+                    "results\\DynTouch27\\RobotArm\\RobotArm-499914.pt"
+                ]
+            },
+            {
+                "steps": 999474,
+                "file_path": "results\\DynTouch27\\RobotArm\\RobotArm-999474.onnx",
+                "reward": null,
+                "creation_time": 1707346173.428142,
+                "auxillary_file_paths": [
+                    "results\\DynTouch27\\RobotArm\\RobotArm-999474.pt"
+                ]
+            },
+            {
+                "steps": 1119578,
+                "file_path": "results\\DynTouch27\\RobotArm\\RobotArm-1119578.onnx",
+                "reward": 41101.28046875,
+                "creation_time": 1707346327.3968894,
+                "auxillary_file_paths": [
+                    "results\\DynTouch27\\RobotArm\\RobotArm-1119578.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1119578,
+            "file_path": "results\\DynTouch27\\RobotArm.onnx",
+            "reward": 41101.28046875,
+            "creation_time": 1707346327.3968894,
+            "auxillary_file_paths": [
+                "results\\DynTouch27\\RobotArm\\RobotArm-1119578.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.1.2+cpu"
+    }
+}

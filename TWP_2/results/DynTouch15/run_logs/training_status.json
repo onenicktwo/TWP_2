@@ -1,0 +1,65 @@
+{
+    "RobotArm": {
+        "checkpoints": [
+            {
+                "steps": 999552,
+                "file_path": "results\\DynTouch15\\RobotArm\\RobotArm-999552.onnx",
+                "reward": -9059.054361979166,
+                "creation_time": 1707336175.7104924,
+                "auxillary_file_paths": [
+                    "results\\DynTouch15\\RobotArm\\RobotArm-999552.pt"
+                ]
+            },
+            {
+                "steps": 1499480,
+                "file_path": "results\\DynTouch15\\RobotArm\\RobotArm-1499480.onnx",
+                "reward": 9802.988394601005,
+                "creation_time": 1707336678.0288856,
+                "auxillary_file_paths": [
+                    "results\\DynTouch15\\RobotArm\\RobotArm-1499480.pt"
+                ]
+            },
+            {
+                "steps": 1999977,
+                "file_path": "results\\DynTouch15\\RobotArm\\RobotArm-1999977.onnx",
+                "reward": -6527.79638671875,
+                "creation_time": 1707337180.759256,
+                "auxillary_file_paths": [
+                    "results\\DynTouch15\\RobotArm\\RobotArm-1999977.pt"
+                ]
+            },
+            {
+                "steps": 2499957,
+                "file_path": "results\\DynTouch15\\RobotArm\\RobotArm-2499957.onnx",
+                "reward": 2782.7530822753906,
+                "creation_time": 1707337689.3693578,
+                "auxillary_file_paths": [
+                    "results\\DynTouch15\\RobotArm\\RobotArm-2499957.pt"
+                ]
+            },
+            {
+                "steps": 2812642,
+                "file_path": "results\\DynTouch15\\RobotArm\\RobotArm-2812642.onnx",
+                "reward": -2624.566162109375,
+                "creation_time": 1707338071.1709096,
+                "auxillary_file_paths": [
+                    "results\\DynTouch15\\RobotArm\\RobotArm-2812642.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2812642,
+            "file_path": "results\\DynTouch15\\RobotArm.onnx",
+            "reward": -2624.566162109375,
+            "creation_time": 1707338071.1709096,
+            "auxillary_file_paths": [
+                "results\\DynTouch15\\RobotArm\\RobotArm-2812642.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.1.2+cpu"
+    }
+}
