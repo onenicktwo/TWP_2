@@ -1464,9 +1464,9 @@ GameObject:
   - component: {fileID: 7402246123496565871}
   - component: {fileID: 8278278600741480255}
   - component: {fileID: 2632935486146604426}
-  - component: {fileID: 802880525277679872}
   - component: {fileID: 2571156063719442580}
   - component: {fileID: 4548098198656240236}
+  - component: {fileID: 461276730993865690}
   m_Layer: 0
   m_Name: ArmGoal
   m_TagString: Untagged
@@ -1561,8 +1561,8 @@ MonoBehaviour:
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
     hasUpgradedBrainParametersWithActionSpec: 1
-  m_Model: {fileID: 5022602860645237092, guid: dcf1500558a4d2e49b5b094714f82da2, type: 3}
-  m_InferenceDevice: 0
+  m_Model: {fileID: 0}
+  m_InferenceDevice: 1
   m_BehaviorType: 0
   m_BehaviorName: RobotArm
   TeamId: 0
@@ -1583,28 +1583,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   DecisionPeriod: 5
   TakeActionsBetweenDecisions: 1
---- !u!114 &802880525277679872
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7496330906759223976}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4ce029aa162d3164a91552f3576b65a4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  agentParameters:
-    maxStep: 0
-  hasUpgradedFromAgentParameters: 1
-  MaxStep: 5000
-  winMat: {fileID: 2100000, guid: f3680e93d73bf034a8c014353dd6947b, type: 2}
-  failMat: {fileID: 2100000, guid: 716c3c4e0da20d24591dd2de713f47fc, type: 2}
-  floorMeshRenderer: {fileID: 1792665464479401967}
-  envManager: {fileID: 3669343566573876849}
-  goalTransform: {fileID: 8985603349190545690}
-  moveSpeed: 5
 --- !u!135 &2571156063719442580
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -1653,6 +1631,28 @@ Rigidbody:
   m_Interpolate: 2
   m_Constraints: 112
   m_CollisionDetection: 1
+--- !u!114 &461276730993865690
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7496330906759223976}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7a4de69f183cc814d8335249e97014ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  agentParameters:
+    maxStep: 0
+  hasUpgradedFromAgentParameters: 1
+  MaxStep: 5000
+  winMat: {fileID: 2100000, guid: f3680e93d73bf034a8c014353dd6947b, type: 2}
+  failMat: {fileID: 2100000, guid: 716c3c4e0da20d24591dd2de713f47fc, type: 2}
+  floorMeshRenderer: {fileID: 1792665464479401967}
+  envManager: {fileID: 3669343566573876849}
+  goalTransform: {fileID: 8985603349190545690}
+  moveSpeed: 5
 --- !u!1 &8541285909912729823
 GameObject:
   m_ObjectHideFlags: 0
