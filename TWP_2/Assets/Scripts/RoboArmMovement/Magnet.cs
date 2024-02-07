@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Magnet : MonoBehaviour
 {
-   // public ArmController armController;
+    //public StaticDragDrop StaticDragDrop;
     public GameObject parent;
     public bool isPickedUp = false;
     private void OnTriggerEnter(Collider other)
@@ -25,4 +25,9 @@ public class Magnet : MonoBehaviour
 
 
     }
+    private void OnTriggerExit(Collider other)
+    {
+        isPickedUp=false;
+    }
 }
+
