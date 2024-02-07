@@ -25,6 +25,7 @@ public class DynamicTouchAgent : Agent
 
     private float beginDistance;
     private float prevBest;
+    private const float stepPenalty = -0.0001f;
 
     public override void OnEpisodeBegin()
     {
@@ -42,9 +43,7 @@ public class DynamicTouchAgent : Agent
     {
         sensor.AddObservation(transform.localPosition);
         sensor.AddObservation(goalTransform.localPosition);
-        //Vector3 toComponent = (goalTransform.localPosition - transform.localPosition);
-        //sensor.AddObservation(toComponent);
-        //sensor.AddObservation(Vector3.Distance(goalTransform.localPosition, transform.localPosition));
+        sensor.AddObservation(Vector3.Distance(goalTransform.localPosition, transform.localPosition));
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
@@ -54,19 +53,21 @@ public class DynamicTouchAgent : Agent
 
         transform.localPosition += new Vector3(moveX, moveY, moveZ) * Time.deltaTime * moveSpeed;
 
-        /*
-        float distance = Vector3.Distance(transform.localPosition, goalTransform.localPosition);
+        float distance = Vector3.Distance(transform.localPosition,
+            goalTransform.localPosition);
         float diff = beginDistance - distance;
+
         if (distance > prevBest)
         {
-            AddReward(prevBest - distance);
+            // Penalty if the arm moves away from the closest position to target
+            AddReward((prevBest - distance) / MaxStep);
         }
         else
         {
-            AddReward(diff);
+            // Reward if the arm moves closer to target
+            AddReward(diff / MaxStep);
             prevBest = distance;
         }
-        */
     }
 
     public override void Heuristic(in ActionBuffers actionsOut)
@@ -82,13 +83,13 @@ public class DynamicTouchAgent : Agent
         if (other.gameObject.tag == "Object")
         {
             Debug.Log("Win");
-            AddReward(+0.5f);
+            AddReward(+10f);
             floorMeshRenderer.material = winMat;
             EndEpisode();
         }
         else if (other.gameObject.tag == "Wall")
         {
-            AddReward(-1f);
+            //AddReward(-1f);
             floorMeshRenderer.material = failMat;
             EndEpisode();
         }
