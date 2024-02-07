@@ -14,24 +14,38 @@ public class StaticDragDrop : Agent
     [SerializeField] private Transform goalTransform;
     [SerializeField] private float moveSpeed = 1f;
     [SerializeField] private float pickUpRange = 1.5f;
-    private GameObject objectInHand;
+
     private Vector3 originalObjectPosition; 
     private bool objectMoved = false; 
-
+    private float previousDistanceToGoal;
+    public GameObject hand;
     public GameObject Object;
     public GameObject EnvironmentObject;
+
+    private bool isHoldingObject = false;
+    private float holdingTimer = 0f;
+    private float maxHoldTime = 10f; // Adjust as needed
 
     public override void OnEpisodeBegin()
     {
         transform.localPosition = new Vector3(0, 54, 0);
         Object.gameObject.transform.parent = EnvironmentObject.transform;
         Object.transform.localPosition = new Vector3(0, 3, -39.5f);
+
         originalObjectPosition = Object.transform.localPosition;
+
+
+        previousDistanceToGoal = Vector3.Distance(Object.transform.position, goalTransform.position);
+
     }
 
     private void ResetObjects()
     {
-        goalTransform.localPosition = new Vector3(Random.Range(4f, 1f), 1, Random.Range(-1.5f, 1.5f));
+
+      goalTransform.localPosition = new Vector3(Random.Range(4f, 1f), 1, Random.Range(-1.5f, 1.5f));
+    
+
+
     }
 
     public override void CollectObservations(VectorSensor sensor)
@@ -48,9 +62,27 @@ public class StaticDragDrop : Agent
 
         transform.localPosition += new Vector3(moveX, moveY, moveZ) * Time.deltaTime * moveSpeed;
 
-        if (objectInHand != null)
+        if (hand.GetComponent<Magnet>().isPickedUp ==true)
         {
-            objectInHand.transform.localPosition += new Vector3(moveX, moveY, moveZ) * Time.deltaTime * moveSpeed;
+
+
+
+
+            float currentDistanceToGoal = Vector3.Distance(Object.transform.position, goalTransform.position);
+            if (IsMovingTowardsGoal(Object.transform.localPosition))
+            {
+                AddReward(0.01f); 
+            }
+            else
+            {
+                AddReward(-0.01f); 
+            }
+            if (holdingTimer > maxHoldTime)
+            {
+                AddReward(-0.1f); 
+                holdingTimer = 0f; 
+            }
+            previousDistanceToGoal = currentDistanceToGoal;
         }
     }
 
@@ -63,11 +95,13 @@ public class StaticDragDrop : Agent
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.CompareTag("Object") && objectInHand == null)
+
+
+        if (other.gameObject.CompareTag("Object"))
         {
             AddReward(+0.50f);
         }
-        else if (objectInHand != null && objectInHand.GetComponent<Object>().isTouchingGoal == true)
+        else if (Object != null && Object.GetComponent<Object>().isTouchingGoal == true)
         {
             AddReward(+1f);
             floorMeshRenderer.material = winMat;
@@ -80,17 +114,14 @@ public class StaticDragDrop : Agent
             EndEpisode();
         }
 
-        if (other.gameObject.CompareTag("Object") && !objectMoved)
-        {
-            float distanceMoved = Vector3.Distance(originalObjectPosition, other.transform.localPosition);
-            float rewardPerMovement = 0.01f;
-            float maxReward = 0.5f;
-
-            float movementReward = Mathf.Min(distanceMoved * rewardPerMovement, maxReward);
-            if (distanceMoved>=10f){
-            AddReward(movementReward);}
-
-            objectMoved = true; 
-        }
+      
     }
+ 
+
+private bool IsMovingTowardsGoal(Vector3 objectPosition)
+{
+    float distanceToGoal = Vector3.Distance(objectPosition, goalTransform.position);
+    return distanceToGoal < previousDistanceToGoal; 
+}
+
 }

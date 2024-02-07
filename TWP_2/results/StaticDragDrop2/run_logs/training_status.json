@@ -2,58 +2,58 @@
     "RobotArm": {
         "checkpoints": [
             {
-                "steps": 500001,
-                "file_path": "results\\StaticDragDrop2\\RobotArm\\RobotArm-500001.onnx",
-                "reward": null,
-                "creation_time": 1706673381.4238336,
+                "steps": 2949512,
+                "file_path": "results\\StaticDragDrop2\\RobotArm\\RobotArm-2949512.onnx",
+                "reward": -0.7948484875148896,
+                "creation_time": 1707280077.4527683,
                 "auxillary_file_paths": [
-                    "results\\StaticDragDrop2\\RobotArm\\RobotArm-500001.pt"
+                    "results\\StaticDragDrop2\\RobotArm\\RobotArm-2949512.pt"
                 ]
             },
             {
-                "steps": 500001,
-                "file_path": "results\\StaticDragDrop2\\RobotArm\\RobotArm-500001.onnx",
+                "steps": 2980342,
+                "file_path": "results\\StaticDragDrop2\\RobotArm\\RobotArm-2980342.onnx",
                 "reward": null,
-                "creation_time": 1706673439.52082,
+                "creation_time": 1707280135.6990623,
                 "auxillary_file_paths": [
-                    "results\\StaticDragDrop2\\RobotArm\\RobotArm-500001.pt"
+                    "results\\StaticDragDrop2\\RobotArm\\RobotArm-2980342.pt"
                 ]
             },
             {
-                "steps": 759966,
-                "file_path": "results\\StaticDragDrop2\\RobotArm\\RobotArm-759966.onnx",
-                "reward": 5.0,
-                "creation_time": 1706673811.628323,
+                "steps": 2999989,
+                "file_path": "results\\StaticDragDrop2\\RobotArm\\RobotArm-2999989.onnx",
+                "reward": -0.8676922973603584,
+                "creation_time": 1707280265.0483615,
                 "auxillary_file_paths": [
-                    "results\\StaticDragDrop2\\RobotArm\\RobotArm-759966.pt"
+                    "results\\StaticDragDrop2\\RobotArm\\RobotArm-2999989.pt"
                 ]
             },
             {
-                "steps": 999989,
-                "file_path": "results\\StaticDragDrop2\\RobotArm\\RobotArm-999989.onnx",
-                "reward": null,
-                "creation_time": 1706674133.4097002,
+                "steps": 3207058,
+                "file_path": "results\\StaticDragDrop2\\RobotArm\\RobotArm-3207058.onnx",
+                "reward": 0.9150000363588333,
+                "creation_time": 1707280467.5737886,
                 "auxillary_file_paths": [
-                    "results\\StaticDragDrop2\\RobotArm\\RobotArm-999989.pt"
+                    "results\\StaticDragDrop2\\RobotArm\\RobotArm-3207058.pt"
                 ]
             },
             {
-                "steps": 1192881,
-                "file_path": "results\\StaticDragDrop2\\RobotArm\\RobotArm-1192881.onnx",
+                "steps": 3485022,
+                "file_path": "results\\StaticDragDrop2\\RobotArm\\RobotArm-3485022.onnx",
                 "reward": null,
-                "creation_time": 1706674293.9269288,
+                "creation_time": 1707280736.34714,
                 "auxillary_file_paths": [
-                    "results\\StaticDragDrop2\\RobotArm\\RobotArm-1192881.pt"
+                    "results\\StaticDragDrop2\\RobotArm\\RobotArm-3485022.pt"
                 ]
             }
         ],
         "final_checkpoint": {
-            "steps": 1192881,
+            "steps": 3485022,
             "file_path": "results\\StaticDragDrop2\\RobotArm.onnx",
             "reward": null,
-            "creation_time": 1706674293.9269288,
+            "creation_time": 1707280736.34714,
             "auxillary_file_paths": [
-                "results\\StaticDragDrop2\\RobotArm\\RobotArm-1192881.pt"
+                "results\\StaticDragDrop2\\RobotArm\\RobotArm-3485022.pt"
             ]
         }
     },

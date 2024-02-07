@@ -8,11 +8,12 @@ public class Object : MonoBehaviour
     public float timerDuration = 3.0f;  // Adjust the duration as needed
     public bool isTouchingGoal = false; 
     public GameObject goal;
-    public StaticDragDrop staticDragDrop;
-
+    //ublic StaticDragDrop staticDragDrop;
+    
     
     private void Start()
     {
+        
         timer = timerDuration;
     }
 
@@ -39,4 +40,6 @@ public class Object : MonoBehaviour
         }
 
     }
+
 }
+    
