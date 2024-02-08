@@ -6,8 +6,10 @@ using UnityEngine;
 
 public class EnvironmentManager : MonoBehaviour
 {
-    private List<GameObject> activeObjects = new List<GameObject>();
+    [SerializeField]
+    public List<GameObject> activeObjects = new List<GameObject>();
 
+    /*
     void Update()
     {
         if (Input.GetButton("Fire1"))
@@ -19,6 +21,8 @@ public class EnvironmentManager : MonoBehaviour
             ClearActiveObject();
         }
     }
+    */
+    
     public void GenerateObjects()
     {
         for (int i = 0; i < GameManager.inst.ObjCount; ++i)

@@ -1,0 +1,65 @@
+{
+    "RobotArm": {
+        "checkpoints": [
+            {
+                "steps": 2949512,
+                "file_path": "results\\StaticDragDrop2\\RobotArm\\RobotArm-2949512.onnx",
+                "reward": -0.7948484875148896,
+                "creation_time": 1707280077.4527683,
+                "auxillary_file_paths": [
+                    "results\\StaticDragDrop2\\RobotArm\\RobotArm-2949512.pt"
+                ]
+            },
+            {
+                "steps": 2980342,
+                "file_path": "results\\StaticDragDrop2\\RobotArm\\RobotArm-2980342.onnx",
+                "reward": null,
+                "creation_time": 1707280135.6990623,
+                "auxillary_file_paths": [
+                    "results\\StaticDragDrop2\\RobotArm\\RobotArm-2980342.pt"
+                ]
+            },
+            {
+                "steps": 2999989,
+                "file_path": "results\\StaticDragDrop2\\RobotArm\\RobotArm-2999989.onnx",
+                "reward": -0.8676922973603584,
+                "creation_time": 1707280265.0483615,
+                "auxillary_file_paths": [
+                    "results\\StaticDragDrop2\\RobotArm\\RobotArm-2999989.pt"
+                ]
+            },
+            {
+                "steps": 3207058,
+                "file_path": "results\\StaticDragDrop2\\RobotArm\\RobotArm-3207058.onnx",
+                "reward": 0.9150000363588333,
+                "creation_time": 1707280467.5737886,
+                "auxillary_file_paths": [
+                    "results\\StaticDragDrop2\\RobotArm\\RobotArm-3207058.pt"
+                ]
+            },
+            {
+                "steps": 3485022,
+                "file_path": "results\\StaticDragDrop2\\RobotArm\\RobotArm-3485022.onnx",
+                "reward": null,
+                "creation_time": 1707280736.34714,
+                "auxillary_file_paths": [
+                    "results\\StaticDragDrop2\\RobotArm\\RobotArm-3485022.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 3485022,
+            "file_path": "results\\StaticDragDrop2\\RobotArm.onnx",
+            "reward": null,
+            "creation_time": 1707280736.34714,
+            "auxillary_file_paths": [
+                "results\\StaticDragDrop2\\RobotArm\\RobotArm-3485022.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.1.2+cu118"
+    }
+}

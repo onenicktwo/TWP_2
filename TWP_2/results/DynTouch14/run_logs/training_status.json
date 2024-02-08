@@ -1,0 +1,65 @@
+{
+    "RobotArm": {
+        "checkpoints": [
+            {
+                "steps": 1499534,
+                "file_path": "results\\DynTouch14\\RobotArm\\RobotArm-1499534.onnx",
+                "reward": -0.4375,
+                "creation_time": 1707282819.7676554,
+                "auxillary_file_paths": [
+                    "results\\DynTouch14\\RobotArm\\RobotArm-1499534.pt"
+                ]
+            },
+            {
+                "steps": 1999538,
+                "file_path": "results\\DynTouch14\\RobotArm\\RobotArm-1999538.onnx",
+                "reward": -0.6666666666666666,
+                "creation_time": 1707283395.9643636,
+                "auxillary_file_paths": [
+                    "results\\DynTouch14\\RobotArm\\RobotArm-1999538.pt"
+                ]
+            },
+            {
+                "steps": 2499429,
+                "file_path": "results\\DynTouch14\\RobotArm\\RobotArm-2499429.onnx",
+                "reward": -0.6785714285714286,
+                "creation_time": 1707283917.357761,
+                "auxillary_file_paths": [
+                    "results\\DynTouch14\\RobotArm\\RobotArm-2499429.pt"
+                ]
+            },
+            {
+                "steps": 2999571,
+                "file_path": "results\\DynTouch14\\RobotArm\\RobotArm-2999571.onnx",
+                "reward": 0.0,
+                "creation_time": 1707284432.110773,
+                "auxillary_file_paths": [
+                    "results\\DynTouch14\\RobotArm\\RobotArm-2999571.pt"
+                ]
+            },
+            {
+                "steps": 3232345,
+                "file_path": "results\\DynTouch14\\RobotArm\\RobotArm-3232345.onnx",
+                "reward": -0.3,
+                "creation_time": 1707284740.0374107,
+                "auxillary_file_paths": [
+                    "results\\DynTouch14\\RobotArm\\RobotArm-3232345.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 3232345,
+            "file_path": "results\\DynTouch14\\RobotArm.onnx",
+            "reward": -0.3,
+            "creation_time": 1707284740.0374107,
+            "auxillary_file_paths": [
+                "results\\DynTouch14\\RobotArm\\RobotArm-3232345.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.1.2+cpu"
+    }
+}

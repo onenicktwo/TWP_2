@@ -1,0 +1,29 @@
+{
+    "RobotArm": {
+        "checkpoints": [
+            {
+                "steps": 72348,
+                "file_path": "results\\DynTouch22\\RobotArm\\RobotArm-72348.onnx",
+                "reward": null,
+                "creation_time": 1707341912.5816743,
+                "auxillary_file_paths": [
+                    "results\\DynTouch22\\RobotArm\\RobotArm-72348.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 72348,
+            "file_path": "results\\DynTouch22\\RobotArm.onnx",
+            "reward": null,
+            "creation_time": 1707341912.5816743,
+            "auxillary_file_paths": [
+                "results\\DynTouch22\\RobotArm\\RobotArm-72348.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.1.2+cpu"
+    }
+}
