@@ -70,3 +70,12 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Virtual environment folders
+bat-env/
+venv/
+
+# Specific large files for PyTorch
+TWP_2/bat-env/lib/python3.9/site-packages/torch/lib/libtorch_cpu.dylib
+venv/Lib/site-packages/torch/lib/dnnl.lib
+venv/Lib/site-packages/torch/lib/torch_cpu.dll
