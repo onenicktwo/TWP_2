@@ -9,6 +9,7 @@ TagManager:
   - Object
   - Ground
   - GoalMat
+  - Bat
   layers:
   - Default
   - TransparentFX
