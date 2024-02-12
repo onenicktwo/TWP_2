@@ -5,7 +5,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 
-public class DynamicTouchAgent : Agent
+public class DynamicPicknPlace : Agent
 {
     [SerializeField]
     private Material winMat;
@@ -19,6 +19,14 @@ public class DynamicTouchAgent : Agent
 
     [SerializeField]
     private Transform goalTransform;
+    private DynamicObject dynObject;
+
+    [SerializeField]
+    private Transform goalAreaTransform;
+    [SerializeField]
+    private Transform objParent;
+
+    private bool hasObject = false;
 
     [SerializeField]
     private float moveSpeed = 1f;
@@ -27,13 +35,22 @@ public class DynamicTouchAgent : Agent
     private float prevBest;
     private const float stepPenalty = -0.0001f;
 
+    private void Start()
+    {
+        dynObject = goalTransform.GetComponent<DynamicObject>();
+        dynObject.dynPnP = this;
+    }
     public override void OnEpisodeBegin()
     {
         transform.localPosition = new Vector3(0, 55, 0);
-    
+        hasObject = false;
+        goalTransform.parent = envManager.transform;
+
+        dynObject.RestartEpisode();
+
         Vector3 spawnPosition = Random.insideUnitCircle.normalized;
         spawnPosition *= Random.Range(GameManager.inst.MinDist, GameManager.inst.MaxDist);
-        goalTransform.localPosition = new Vector3(spawnPosition.x, 3f, spawnPosition.y);
+        goalAreaTransform.localPosition = new Vector3(spawnPosition.x, 0.3f, spawnPosition.y);
 
         beginDistance = Vector3.Distance(transform.localPosition, goalTransform.localPosition);
         prevBest = beginDistance;
@@ -43,7 +60,9 @@ public class DynamicTouchAgent : Agent
     {
         sensor.AddObservation(transform.localPosition);
         sensor.AddObservation(goalTransform.localPosition);
-        sensor.AddObservation(Vector3.Distance(goalTransform.localPosition, transform.localPosition));
+        sensor.AddObservation(goalAreaTransform.localPosition);
+        sensor.AddObservation(Vector3.Distance(transform.localPosition, goalTransform.localPosition));
+        sensor.AddObservation(Vector3.Distance(goalTransform.localPosition, goalAreaTransform.localPosition));
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
@@ -53,10 +72,18 @@ public class DynamicTouchAgent : Agent
 
         transform.localPosition += new Vector3(moveX, moveY, moveZ) * Time.deltaTime * moveSpeed;
 
-        float distance = Vector3.Distance(transform.localPosition,
-            goalTransform.localPosition);
-        float diff = beginDistance - distance;
-
+        float distance;
+        float diff;
+        if (hasObject == false)
+        {
+            distance = Vector3.Distance(transform.localPosition, goalTransform.localPosition);
+            diff = beginDistance - distance;
+        } 
+        else
+        {
+            distance = Vector3.Distance(goalTransform.localPosition, goalAreaTransform.localPosition);
+            diff = beginDistance - distance;
+        }
         if (distance > prevBest)
         {
             // Penalty if the arm moves away from the closest position to target
@@ -80,11 +107,16 @@ public class DynamicTouchAgent : Agent
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Wall")
+        if (other.gameObject.tag == "GoalArea")
         {
-            //AddReward(-1f);
-            floorMeshRenderer.material = failMat;
+            Debug.Log("Goal Area Reached");
+            AddReward(+10f);
+            floorMeshRenderer.material = winMat;
             EndEpisode();
+        }
+        else if (other.gameObject.tag == "Wall")
+        {
+            CollisionFail();
         }
     }
 
@@ -92,10 +124,21 @@ public class DynamicTouchAgent : Agent
     {
         if (collision.gameObject.tag == "Object")
         {
-            Debug.Log("Win");
+            Debug.Log("Touched Obj");
             AddReward(+10f);
-            floorMeshRenderer.material = winMat;
-            EndEpisode();
+            hasObject = true;
+
+            collision.gameObject.transform.parent = objParent;
+            beginDistance = Vector3.Distance(goalTransform.localPosition, goalAreaTransform.localPosition);
+            prevBest = beginDistance;
         }
+    }
+
+    public void CollisionFail()
+    {
+        Debug.Log("Fail Collision");
+        AddReward(-5f);
+        floorMeshRenderer.material = failMat;
+        EndEpisode();
     }
 }
