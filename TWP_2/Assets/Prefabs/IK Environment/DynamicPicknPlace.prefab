@@ -1654,8 +1654,8 @@ MonoBehaviour:
   envManager: {fileID: 3669343566573876849}
   goalTransform: {fileID: 7121158503752750414}
   goalAreaTransform: {fileID: 6693838278738281947}
-  objParent: {fileID: 0}
-  moveSpeed: 1
+  objParent: {fileID: 899429455752532658}
+  moveSpeed: 5
 --- !u!1 &8541285909912729823
 GameObject:
   m_ObjectHideFlags: 0

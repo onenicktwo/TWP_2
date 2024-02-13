@@ -107,7 +107,7 @@ public class DynamicPicknPlace : Agent
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "GoalArea")
+        if (other.gameObject.tag == "GoalArea" && hasObject)
         {
             Debug.Log("Goal Area Reached");
             AddReward(+10f);
@@ -122,7 +122,7 @@ public class DynamicPicknPlace : Agent
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "Object")
+        if (collision.gameObject.tag == "Object" && hasObject == false)
         {
             Debug.Log("Touched Obj");
             AddReward(+10f);
@@ -136,7 +136,6 @@ public class DynamicPicknPlace : Agent
 
     public void CollisionFail()
     {
-        Debug.Log("Fail Collision");
         AddReward(-5f);
         floorMeshRenderer.material = failMat;
         EndEpisode();

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 350453580367106288}
   - component: {fileID: 6622877671190033765}
   - component: {fileID: 5355647702130522692}
+  - component: {fileID: 6720035093983158804}
   m_Layer: 0
   m_Name: RbCube
   m_TagString: Object
@@ -133,3 +134,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 126
   m_CollisionDetection: 2
+--- !u!114 &6720035093983158804
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5364655765941485196}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 21c8562cbf9949e45a6f5a0a68c6877f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timerDuration: 3
+  dynPnP: {fileID: 0}
