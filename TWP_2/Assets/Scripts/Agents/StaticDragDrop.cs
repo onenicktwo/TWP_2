@@ -4,6 +4,7 @@ using UnityEngine;
 using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
+using Unity.VisualScripting;
 
 public class StaticDragDrop : Agent
 {
@@ -17,7 +18,7 @@ public class StaticDragDrop : Agent
 
     private Vector3 originalObjectPosition; 
     private bool objectMoved = false; 
-    private float previousDistanceToGoal;
+    private float previousBest;
     public GameObject hand;
     public GameObject Object;
     public GameObject EnvironmentObject;
@@ -35,7 +36,7 @@ public class StaticDragDrop : Agent
         originalObjectPosition = Object.transform.localPosition;
 
 
-        previousDistanceToGoal = Vector3.Distance(Object.transform.position, goalTransform.position);
+        previousBest = Vector3.Distance(EnvironmentObject.transform.TransformPoint(Object.transform.position), EnvironmentObject.transform.TransformPoint(goalTransform.position));
 
     }
 
@@ -49,10 +50,15 @@ public class StaticDragDrop : Agent
     }
 
     public override void CollectObservations(VectorSensor sensor)
-    {
-        sensor.AddObservation(transform.localPosition);
-        sensor.AddObservation(goalTransform.localPosition);
-    }
+{    
+    sensor.AddObservation(transform.localPosition);
+    
+    sensor.AddObservation(EnvironmentObject.transform.TransformPoint(Object.transform.position));
+    
+    // Calculate and add distance to goal
+    float distanceToGoal = Vector3.Distance(EnvironmentObject.transform.TransformPoint(Object.transform.position), EnvironmentObject.transform.TransformPoint(goalTransform.position));
+    sensor.AddObservation(distanceToGoal);
+}
 
     public override void OnActionReceived(ActionBuffers actions)
     {
@@ -66,23 +72,23 @@ public class StaticDragDrop : Agent
         {
 
 
-
-
-            float currentDistanceToGoal = Vector3.Distance(Object.transform.position, goalTransform.position);
-            if (IsMovingTowardsGoal(Object.transform.localPosition))
+            float currentDistanceToGoal = Vector3.Distance(EnvironmentObject.transform.TransformPoint(Object.transform.position), EnvironmentObject.transform.TransformPoint(goalTransform.position));
+            if (IsMovingTowardsGoal(EnvironmentObject.transform.TransformPoint(Object.transform.position)))
+            
             {
                 AddReward(0.01f); 
+                previousBest = currentDistanceToGoal;
             }
             else
             {
-                AddReward(-0.01f); 
+                AddReward(-0.0f); 
             }
             if (holdingTimer > maxHoldTime)
             {
                 AddReward(-0.1f); 
                 holdingTimer = 0f; 
             }
-            previousDistanceToGoal = currentDistanceToGoal;
+            
         }
     }
 
@@ -99,7 +105,7 @@ public class StaticDragDrop : Agent
 
         if (other.gameObject.CompareTag("Object"))
         {
-            AddReward(+0.50f);
+            AddReward(+0.75f);
         }
         else if (Object != null && Object.GetComponent<Object>().isTouchingGoal == true)
         {
@@ -120,8 +126,8 @@ public class StaticDragDrop : Agent
 
 private bool IsMovingTowardsGoal(Vector3 objectPosition)
 {
-    float distanceToGoal = Vector3.Distance(objectPosition, goalTransform.position);
-    return distanceToGoal < previousDistanceToGoal; 
+    float distanceToGoal = Vector3.Distance(EnvironmentObject.transform.TransformPoint(Object.transform.position), EnvironmentObject.transform.TransformPoint(goalTransform.position));
+    return distanceToGoal < previousBest; 
 }
 
 }
