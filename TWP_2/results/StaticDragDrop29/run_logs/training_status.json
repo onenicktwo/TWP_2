@@ -1,0 +1,47 @@
+{
+    "RobotArm": {
+        "checkpoints": [
+            {
+                "steps": 499787,
+                "file_path": "results\\StaticDragDrop29\\RobotArm\\RobotArm-499787.onnx",
+                "reward": 11.597272685079863,
+                "creation_time": 1707887696.799278,
+                "auxillary_file_paths": [
+                    "results\\StaticDragDrop29\\RobotArm\\RobotArm-499787.pt"
+                ]
+            },
+            {
+                "steps": 999199,
+                "file_path": "results\\StaticDragDrop29\\RobotArm\\RobotArm-999199.onnx",
+                "reward": 40.158261382061504,
+                "creation_time": 1707888016.5661244,
+                "auxillary_file_paths": [
+                    "results\\StaticDragDrop29\\RobotArm\\RobotArm-999199.pt"
+                ]
+            },
+            {
+                "steps": 1174057,
+                "file_path": "results\\StaticDragDrop29\\RobotArm\\RobotArm-1174057.onnx",
+                "reward": 78.02666600545247,
+                "creation_time": 1707888136.1586635,
+                "auxillary_file_paths": [
+                    "results\\StaticDragDrop29\\RobotArm\\RobotArm-1174057.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1174057,
+            "file_path": "results\\StaticDragDrop29\\RobotArm.onnx",
+            "reward": 78.02666600545247,
+            "creation_time": 1707888136.1586635,
+            "auxillary_file_paths": [
+                "results\\StaticDragDrop29\\RobotArm\\RobotArm-1174057.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.1.2+cu118"
+    }
+}

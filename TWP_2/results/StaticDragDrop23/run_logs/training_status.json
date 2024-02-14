@@ -1,0 +1,65 @@
+{
+    "RobotArm": {
+        "checkpoints": [
+            {
+                "steps": 999995,
+                "file_path": "results\\StaticDragDrop23\\RobotArm\\RobotArm-999995.onnx",
+                "reward": 68.6100067794323,
+                "creation_time": 1707885574.3785777,
+                "auxillary_file_paths": [
+                    "results\\StaticDragDrop23\\RobotArm\\RobotArm-999995.pt"
+                ]
+            },
+            {
+                "steps": 1117515,
+                "file_path": "results\\StaticDragDrop23\\RobotArm\\RobotArm-1117515.onnx",
+                "reward": null,
+                "creation_time": 1707885660.1327376,
+                "auxillary_file_paths": [
+                    "results\\StaticDragDrop23\\RobotArm\\RobotArm-1117515.pt"
+                ]
+            },
+            {
+                "steps": 1128267,
+                "file_path": "results\\StaticDragDrop23\\RobotArm\\RobotArm-1128267.onnx",
+                "reward": null,
+                "creation_time": 1707885707.4699929,
+                "auxillary_file_paths": [
+                    "results\\StaticDragDrop23\\RobotArm\\RobotArm-1128267.pt"
+                ]
+            },
+            {
+                "steps": 1135947,
+                "file_path": "results\\StaticDragDrop23\\RobotArm\\RobotArm-1135947.onnx",
+                "reward": null,
+                "creation_time": 1707885787.8575451,
+                "auxillary_file_paths": [
+                    "results\\StaticDragDrop23\\RobotArm\\RobotArm-1135947.pt"
+                ]
+            },
+            {
+                "steps": 1181857,
+                "file_path": "results\\StaticDragDrop23\\RobotArm\\RobotArm-1181857.onnx",
+                "reward": 16.640002071857452,
+                "creation_time": 1707886116.2459643,
+                "auxillary_file_paths": [
+                    "results\\StaticDragDrop23\\RobotArm\\RobotArm-1181857.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1181857,
+            "file_path": "results\\StaticDragDrop23\\RobotArm.onnx",
+            "reward": 16.640002071857452,
+            "creation_time": 1707886116.2459643,
+            "auxillary_file_paths": [
+                "results\\StaticDragDrop23\\RobotArm\\RobotArm-1181857.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.1.2+cu118"
+    }
+}
