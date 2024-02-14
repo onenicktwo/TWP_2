@@ -10,6 +10,7 @@ TagManager:
   - Ground
   - GoalMat
   - Bat
+  - Ball
   layers:
   - Default
   - TransparentFX

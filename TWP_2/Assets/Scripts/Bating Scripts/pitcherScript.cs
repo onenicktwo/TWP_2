@@ -17,27 +17,26 @@ public class pitcherScript : MonoBehaviour
     [SerializeField]
     private Transform throwPoint;
     [SerializeField]
-    private Transform batPosition; // Reference to the bat's position
+    private Transform batPosition;
 
     private PitchType[] pitchTypes;
-    private float pitchTimer; // Timer to control pitch frequency
-    public float timeBetweenPitches = 3f; // Time in seconds between pitches
+    private float pitchTimer;
+    public float timeBetweenPitches = 3f;
 
     void Start()
     {
         InitializePitchTypes();
-        pitchTimer = timeBetweenPitches; // Initialize the pitch timer
+        pitchTimer = timeBetweenPitches;
     }
 
     void Update()
     {
-        pitchTimer -= Time.deltaTime; // Decrement the timer each frame
+        pitchTimer -= Time.deltaTime;
 
-        // Check if it's time to throw another ball
         if (pitchTimer <= 0f)
         {
             ThrowBall();
-            pitchTimer = timeBetweenPitches; // Reset the timer
+            pitchTimer = timeBetweenPitches;
         }
     }
 
@@ -48,28 +47,28 @@ public class pitcherScript : MonoBehaviour
 
         if (ballBehavior != null)
         {
-            ballBehavior.pitcher = this; // Set the pitcher reference
-        }
-        else
-        {
-            Debug.LogError("BallBehavior script not found on the ball prefab!");
+            ballBehavior.pitcher = this;
         }
 
         Rigidbody rb = ball.GetComponent<Rigidbody>();
         PitchType selectedPitch = pitchTypes[Random.Range(0, pitchTypes.Length)];
-        Vector3 throwDirection = (batPosition.position - throwPoint.position).normalized; // Calculate direction towards the bat
+        Vector3 throwDirection = (batPosition.position - throwPoint.position).normalized;
 
-        Debug.Log($"Throw Direction: {throwDirection}, Speed: {selectedPitch.speed}");
+        
         rb.AddForce(throwDirection * selectedPitch.speed, ForceMode.Impulse);
+
+        // Apply spin to the ball based on the selected pitch type
+        Vector3 spinAxis = Vector3.Cross(throwDirection, Vector3.up).normalized;
+        rb.AddTorque(spinAxis * selectedPitch.spin, ForceMode.Impulse);
     }
 
     private void InitializePitchTypes()
     {
         pitchTypes = new PitchType[]
         {
-            new PitchType() { name = "Fastball", speed = 120f, direction = Vector3.forward, spin = 0f },
-            new PitchType() { name = "Curveball", speed = 105f, direction = new Vector3(0.5f, 0, 1).normalized, spin = 1f },
-            new PitchType() { name = "Slider", speed = 100f, direction = new Vector3(-0.5f, 0, 1).normalized, spin = -1f }
+            new PitchType() { name = "Fastball", speed = 400f, direction = Vector3.forward, spin = 0f },
+            new PitchType() { name = "Curveball", speed = 320f, direction = new Vector3(0.5f, 0, 1).normalized, spin = 1f },
+            new PitchType() { name = "Slider", speed = 340f, direction = new Vector3(-0.5f, 0, 1).normalized, spin = -1f }
         };
     }
 }

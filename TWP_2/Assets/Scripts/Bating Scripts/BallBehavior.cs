@@ -3,14 +3,18 @@ using UnityEngine;
 
 public class BallBehavior : MonoBehaviour
 {
-    public pitcherScript pitcher; // Add this reference
+    public pitcherScript pitcher;
     public float waitTimeBeforeDespawn = 5f;
     public float delayBeforeNewPitch = 2f;
 
     private void OnCollisionEnter(Collision collision)
     {
-        // Check for collision with the bat instead of the floor
         if (collision.gameObject.tag == "Wall")
+        {
+            StartCoroutine(DelayNewPitch());
+            StartCoroutine(DespawnAfterDelay());
+        }
+        else if (collision.gameObject.tag == "Bat")
         {
             StartCoroutine(DelayNewPitch());
             StartCoroutine(DespawnAfterDelay());
@@ -20,7 +24,7 @@ public class BallBehavior : MonoBehaviour
     private IEnumerator DelayNewPitch()
     {
         yield return new WaitForSeconds(delayBeforeNewPitch);
-        pitcher.ThrowBall(); // This now happens after a delay
+        pitcher.ThrowBall();
     }
 
     private IEnumerator DespawnAfterDelay()
