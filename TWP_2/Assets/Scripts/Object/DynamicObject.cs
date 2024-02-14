@@ -11,11 +11,7 @@ public class DynamicObject : MonoBehaviour
     public void RestartEpisode()
     {
         timer = timerDuration;
-        Vector3 spawnPosition = Random.insideUnitCircle.normalized;
-        spawnPosition *= Random.Range(GameManager.inst.MinDist, GameManager.inst.MaxDist);
-        transform.localPosition = new Vector3(spawnPosition.x, 3f, spawnPosition.y);
     }
-
     void OnCollisionStay(Collision collision)
     {
         if (collision.gameObject.CompareTag("Ground"))  // Adjust the tag as needed
@@ -27,6 +23,14 @@ public class DynamicObject : MonoBehaviour
             {
                 dynPnP.CollisionFail();
             }
+        }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.tag == "GoalArea")
+        {
+            dynPnP.GoalAreaReached();
         }
     }
 }

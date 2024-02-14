@@ -16,6 +16,7 @@ public class DynamicPicknPlace : Agent
 
     [SerializeField]
     private EnvironmentManager envManager;
+    private Transform envTransform;
 
     [SerializeField]
     private Transform goalTransform;
@@ -39,30 +40,35 @@ public class DynamicPicknPlace : Agent
     {
         dynObject = goalTransform.GetComponent<DynamicObject>();
         dynObject.dynPnP = this;
+        envTransform = envManager.transform;
     }
     public override void OnEpisodeBegin()
     {
-        transform.localPosition = new Vector3(0, 55, 0);
+        goalTransform.parent = envTransform;
         hasObject = false;
-        goalTransform.parent = envManager.transform;
+        transform.localPosition = new Vector3(0, 55, 0);
 
         dynObject.RestartEpisode();
-
         Vector3 spawnPosition = Random.insideUnitCircle.normalized;
         spawnPosition *= Random.Range(GameManager.inst.MinDist, GameManager.inst.MaxDist);
-        goalAreaTransform.localPosition = new Vector3(spawnPosition.x, 0.3f, spawnPosition.y);
+        goalTransform.localPosition = new Vector3(spawnPosition.x, 3f, spawnPosition.y);
 
-        beginDistance = Vector3.Distance(transform.localPosition, goalTransform.localPosition);
+        spawnPosition = Random.insideUnitCircle.normalized;
+        spawnPosition *= Random.Range(GameManager.inst.MinDist, GameManager.inst.MaxDist);
+        goalAreaTransform.localPosition = new Vector3(spawnPosition.x, 3f, spawnPosition.y);
+
+        beginDistance = Vector3.Distance(envTransform.TransformPoint(transform.position), envTransform.TransformPoint(goalTransform.position));
         prevBest = beginDistance;
     }
 
     public override void CollectObservations(VectorSensor sensor)
     {
-        sensor.AddObservation(transform.localPosition);
-        sensor.AddObservation(goalTransform.localPosition);
+        sensor.AddObservation(envTransform.TransformPoint(transform.position));
+        sensor.AddObservation(envTransform.TransformPoint(goalTransform.position));
         sensor.AddObservation(goalAreaTransform.localPosition);
-        sensor.AddObservation(Vector3.Distance(transform.localPosition, goalTransform.localPosition));
-        sensor.AddObservation(Vector3.Distance(goalTransform.localPosition, goalAreaTransform.localPosition));
+        sensor.AddObservation(Vector3.Distance(envTransform.TransformPoint(transform.position), envTransform.TransformPoint(goalTransform.position)));
+        sensor.AddObservation(Vector3.Distance(envTransform.TransformPoint(goalTransform.position), envTransform.TransformPoint(goalAreaTransform.position)));
+        sensor.AddObservation(hasObject);
     }
     public override void OnActionReceived(ActionBuffers actions)
     {
@@ -74,25 +80,26 @@ public class DynamicPicknPlace : Agent
 
         float distance;
         float diff;
+        
         if (hasObject == false)
         {
-            distance = Vector3.Distance(transform.localPosition, goalTransform.localPosition);
-            diff = beginDistance - distance;
+            distance = Vector3.Distance(envTransform.TransformPoint(transform.position), envTransform.TransformPoint(goalTransform.position));
         } 
         else
         {
-            distance = Vector3.Distance(goalTransform.localPosition, goalAreaTransform.localPosition);
-            diff = beginDistance - distance;
+            distance = Vector3.Distance(envTransform.TransformPoint(goalTransform.position), envTransform.TransformPoint(goalAreaTransform.position));
         }
+
+        diff = beginDistance - distance;
         if (distance > prevBest)
         {
             // Penalty if the arm moves away from the closest position to target
-            AddReward((prevBest - distance) / MaxStep);
+            AddReward((prevBest - distance) / 1000);
         }
         else
         {
             // Reward if the arm moves closer to target
-            AddReward(diff / MaxStep);
+            AddReward(diff / 1000);
             prevBest = distance;
         }
     }
@@ -107,14 +114,7 @@ public class DynamicPicknPlace : Agent
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "GoalArea" && hasObject)
-        {
-            Debug.Log("Goal Area Reached");
-            AddReward(+10f);
-            floorMeshRenderer.material = winMat;
-            EndEpisode();
-        }
-        else if (other.gameObject.tag == "Wall")
+        if (other.gameObject.tag == "Wall")
         {
             CollisionFail();
         }
@@ -126,18 +126,36 @@ public class DynamicPicknPlace : Agent
         {
             Debug.Log("Touched Obj");
             AddReward(+10f);
+
             hasObject = true;
 
-            collision.gameObject.transform.parent = objParent;
-            beginDistance = Vector3.Distance(goalTransform.localPosition, goalAreaTransform.localPosition);
+            goalTransform.parent = objParent;
+            beginDistance = Vector3.Distance(envTransform.TransformPoint(goalTransform.position), envTransform.TransformPoint(goalAreaTransform.position));
             prevBest = beginDistance;
         }
     }
 
     public void CollisionFail()
     {
-        AddReward(-5f);
+        AddReward(-10f);
         floorMeshRenderer.material = failMat;
         EndEpisode();
+    }
+
+    public void GoalAreaReached()
+    {
+        if (hasObject)
+        {
+            Debug.Log("Goal Area Reached");
+            AddReward(+10f);
+            floorMeshRenderer.material = winMat;
+            EndEpisode();
+        }
+        else
+        {
+            dynObject.RestartEpisode();
+            beginDistance = Vector3.Distance(envTransform.TransformPoint(transform.position), envTransform.TransformPoint(goalTransform.position));
+            prevBest = beginDistance;
+        }
     }
 }

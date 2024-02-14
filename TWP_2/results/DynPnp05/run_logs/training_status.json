@@ -1,0 +1,29 @@
+{
+    "RobotArm": {
+        "checkpoints": [
+            {
+                "steps": 474357,
+                "file_path": "results\\DynPnp05\\RobotArm\\RobotArm-474357.onnx",
+                "reward": -0.0044593251789220335,
+                "creation_time": 1707861249.7326896,
+                "auxillary_file_paths": [
+                    "results\\DynPnp05\\RobotArm\\RobotArm-474357.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 474357,
+            "file_path": "results\\DynPnp05\\RobotArm.onnx",
+            "reward": -0.0044593251789220335,
+            "creation_time": 1707861249.7326896,
+            "auxillary_file_paths": [
+                "results\\DynPnp05\\RobotArm\\RobotArm-474357.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.1.2+cpu"
+    }
+}
