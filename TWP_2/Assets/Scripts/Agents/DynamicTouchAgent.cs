@@ -80,17 +80,21 @@ public class DynamicTouchAgent : Agent
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Object")
+        if (other.gameObject.tag == "Wall")
+        {
+            //AddReward(-1f);
+            floorMeshRenderer.material = failMat;
+            EndEpisode();
+        }
+    }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.tag == "Object")
         {
             Debug.Log("Win");
             AddReward(+10f);
             floorMeshRenderer.material = winMat;
-            EndEpisode();
-        }
-        else if (other.gameObject.tag == "Wall")
-        {
-            //AddReward(-1f);
-            floorMeshRenderer.material = failMat;
             EndEpisode();
         }
     }
