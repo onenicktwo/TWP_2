@@ -5,7 +5,7 @@ using Unity.MLAgents;
 using Unity.MLAgents.Actuators;
 using Unity.MLAgents.Sensors;
 
-public class DynamicPicknPlace : Agent
+public class PicknPlace : Agent
 {
     [SerializeField]
     private Material winMat;
@@ -28,7 +28,7 @@ public class DynamicPicknPlace : Agent
     [SerializeField]
     private Transform objParent;
 
-    private bool hasObject = false;
+    public bool hasObject = false;
 
     [SerializeField]
     private float moveSpeed = 1f;
@@ -37,6 +37,12 @@ public class DynamicPicknPlace : Agent
     private float prevBest;
     private const float stepPenalty = -0.0001f;
 
+
+    private void Start()
+    {
+        dynObject = goalTransform.GetComponent<DynamicObject>();
+        dynObject.pnp = this;
+    }
     public override void OnEpisodeBegin()
     {
         goalTransform.parent = envTransform;
@@ -82,8 +88,7 @@ public class DynamicPicknPlace : Agent
         } 
         else
         {
-            // distance = Vector3.Distance(envTransform.InverseTransformPoint(goalTransform.position), envTransform.InverseTransformPoint(goalAreaTransform.position));
-            distance = Vector3.Distance(envTransform.InverseTransformPoint(transform.position), envTransform.InverseTransformPoint(goalAreaTransform.position));
+            distance = Vector3.Distance(envTransform.InverseTransformPoint(goalTransform.position), envTransform.InverseTransformPoint(goalAreaTransform.position));
         }
 
         diff = beginDistance - distance;
@@ -109,15 +114,12 @@ public class DynamicPicknPlace : Agent
         contActions[1] = Input.GetAxisRaw("Vertical");
     }
 
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag == "Wall")
         {
             CollisionFail();
-        }
-        if (other.gameObject.tag == "GoalArea" && hasObject == true)
-        {
-            GoalAreaReached();
         }
         if (other.gameObject.tag == "Object" && hasObject == false)
         {
@@ -127,7 +129,7 @@ public class DynamicPicknPlace : Agent
             hasObject = true;
 
             goalTransform.parent = objParent;
-            beginDistance = Vector3.Distance(envTransform.InverseTransformPoint(transform.position), envTransform.InverseTransformPoint(goalAreaTransform.position));
+            beginDistance = Vector3.Distance(envTransform.InverseTransformPoint(goalTransform.position), envTransform.InverseTransformPoint(goalAreaTransform.position));
             prevBest = beginDistance;
 
             //beginDistance = Vector3.Distance(envTransform.InverseTransformPoint(goalTransform.position), envTransform.InverseTransformPoint(goalAreaTransform.position));
@@ -172,12 +174,6 @@ public class DynamicPicknPlace : Agent
             AddReward(+5f);
             floorMeshRenderer.material = winMat;
             EndEpisode();
-        }
-        else
-        {
-            beginDistance = Vector3.Distance(envTransform.InverseTransformPoint(transform.position), envTransform.InverseTransformPoint(goalTransform.position));
-            prevBest = beginDistance;
-            // prevBest = Vector3.Distance(envTransform.TransformPoint(transform.position), envTransform.TransformPoint(goalTransform.position));
         }
     }
 }

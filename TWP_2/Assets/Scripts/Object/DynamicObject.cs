@@ -6,8 +6,9 @@ public class DynamicObject : MonoBehaviour
 {
     private float timer = 0.0f;
     public float timerDuration = 3.0f;  // Adjust the duration as needed
-    public DynamicPicknPlace dynPnP;
+    public PicknPlace pnp;
 
+    /*
     public void RestartEpisode()
     {
         timer = timerDuration;
@@ -25,12 +26,16 @@ public class DynamicObject : MonoBehaviour
             }
         }
     }
-
+    */
     private void OnTriggerEnter(Collider other)
     {
+        if ((other.gameObject.tag == "Wall" && pnp.hasObject) || other.gameObject.tag == "ArmParts")
+        {
+            pnp.CollisionFail();
+        }
         if (other.gameObject.tag == "GoalArea")
         {
-            dynPnP.GoalAreaReached();
+            pnp.GoalAreaReached();
         }
     }
 }
