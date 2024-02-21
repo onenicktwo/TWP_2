@@ -39,17 +39,38 @@ public class DynamicPicknPlace : Agent
 
     public override void OnEpisodeBegin()
     {
-        goalTransform.parent = envTransform;
-        hasObject = false;
-        transform.localPosition = new Vector3(0, 55, 0);
 
-        Vector3 spawnPosition = Random.insideUnitCircle.normalized;
-        spawnPosition *= Random.Range(GameManager.inst.MinDist, GameManager.inst.MaxDist);
-        goalAreaTransform.localPosition = new Vector3(spawnPosition.x, 3f, spawnPosition.y);
+    float goalAreaWidth = 10f;
+    float goalAreaLength = 10f;
+    float minDistance = 10f;
+    int maxAttempts = 100;
 
-        spawnPosition = Random.insideUnitCircle.normalized;
-        spawnPosition *= Random.Range(GameManager.inst.MinDist, GameManager.inst.MaxDist);
-        goalTransform.localPosition = new Vector3(spawnPosition.x, 3f, spawnPosition.y);
+    Vector3 spawnPosition;
+
+    // Get the current position of the goal
+    Vector3 goalPosition = goalTransform.localPosition;
+
+    for (int i = 0; i < maxAttempts; i++)
+    {
+        spawnPosition = new Vector3(Random.Range(-goalAreaWidth / 2f, goalAreaWidth / 2f),
+                                     Random.Range(50f, 60f), // Ensure it's different from the goal area's Y-coordinate
+                                     Random.Range(-goalAreaLength / 2f, goalAreaLength / 2f));
+
+        if (!IsInsideGoalArea(spawnPosition, goalAreaWidth, goalAreaLength, minDistance) &&
+            Vector3.Distance(spawnPosition, goalPosition) > minDistance)
+        {
+            goalTransform.localPosition = spawnPosition;
+            break;
+        }
+
+        if (i == maxAttempts - 1)
+        {
+            Debug.LogWarning("Failed to find a valid spawn position outside the goal area");
+            goalTransform.localPosition = new Vector3(0f, 3f, 0f); // Default position
+        }
+    }
+
+
 
         beginDistance = Vector3.Distance(envTransform.InverseTransformPoint(transform.position), envTransform.InverseTransformPoint(goalTransform.position));
         prevBest = beginDistance;
@@ -179,5 +200,14 @@ public class DynamicPicknPlace : Agent
             prevBest = beginDistance;
             // prevBest = Vector3.Distance(envTransform.TransformPoint(transform.position), envTransform.TransformPoint(goalTransform.position));
         }
+    }
+    private bool IsInsideGoalArea(Vector3 position, float width, float length, float minDistance)
+    {
+        // Check if the position is inside the goal area based on its dimensions
+        if (Mathf.Abs(position.x) < width / 2f - minDistance && Mathf.Abs(position.z) < length / 2f - minDistance)
+        {
+            return true;
+        }
+        return false;
     }
 }
