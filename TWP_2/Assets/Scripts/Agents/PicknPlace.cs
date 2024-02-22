@@ -46,10 +46,17 @@ public class PicknPlace : Agent
     public override void OnEpisodeBegin()
     {
         goalTransform.parent = envTransform;
-        hasObject = false;
-        transform.localPosition = new Vector3(0, 55, 0);
+    hasObject = false;
+    transform.localPosition = new Vector3(0, 55, 0);
+    Vector3 minimumDistance = new Vector3(20.0f, 5.0f, 20.0f);
 
-        Vector3 spawnPosition = Random.insideUnitCircle.normalized;
+    Vector3 spawnPosition;
+    float distanceCheck;
+    bool touching = true;
+    //Debug.Log(touching + "inside of OnEpisodeBegin");
+    while (touching)
+    {
+        spawnPosition = Random.insideUnitCircle.normalized;
         spawnPosition *= Random.Range(GameManager.inst.MinDist, GameManager.inst.MaxDist);
         goalAreaTransform.localPosition = new Vector3(spawnPosition.x, 3f, spawnPosition.y);
 
@@ -57,8 +64,18 @@ public class PicknPlace : Agent
         spawnPosition *= Random.Range(GameManager.inst.MinDist, GameManager.inst.MaxDist);
         goalTransform.localPosition = new Vector3(spawnPosition.x, 3f, spawnPosition.y);
 
-        beginDistance = Vector3.Distance(envTransform.InverseTransformPoint(transform.position), envTransform.InverseTransformPoint(goalTransform.position));
-        prevBest = beginDistance;
+        distanceCheck = Vector3.Distance(goalTransform.position, goalAreaTransform.position);
+        //Debug.Log(touching + "inside of while");
+    if (distanceCheck > minimumDistance.x && distanceCheck > minimumDistance.y && distanceCheck > minimumDistance.z)
+        {
+            touching = false; // Break the loop if the objects are not touching
+                    //Debug.Log(touching + "inside of if");
+        }
+    }
+
+
+    beginDistance = Vector3.Distance(envTransform.InverseTransformPoint(transform.position), envTransform.InverseTransformPoint(goalTransform.position));
+    prevBest = beginDistance;
         // prevBest = Vector3.Distance(envTransform.TransformPoint(transform.position), envTransform.TransformPoint(goalTransform.position)); 
     }
 

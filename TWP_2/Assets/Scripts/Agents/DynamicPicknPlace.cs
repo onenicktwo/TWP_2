@@ -40,42 +40,41 @@ public class DynamicPicknPlace : Agent
     public override void OnEpisodeBegin()
     {
 
-    float goalAreaWidth = 10f;
-    float goalAreaLength = 10f;
-    float minDistance = 10f;
-    int maxAttempts = 100;
+    goalTransform.parent = envTransform;
+    hasObject = false;
+    transform.localPosition = new Vector3(0, 55, 0);
+    Vector3 minimumDistance = new Vector3(20.0f, 5.0f, 20.0f);
 
     Vector3 spawnPosition;
-
-    // Get the current position of the goal
-    Vector3 goalPosition = goalTransform.localPosition;
-
-    for (int i = 0; i < maxAttempts; i++)
+    float distanceCheck;
+    bool touching = true;
+    Debug.Log(touching + "inside of OnEpisodeBegin");
+    while (touching)
     {
-        spawnPosition = new Vector3(Random.Range(-goalAreaWidth / 2f, goalAreaWidth / 2f),
-                                     Random.Range(50f, 60f), // Ensure it's different from the goal area's Y-coordinate
-                                     Random.Range(-goalAreaLength / 2f, goalAreaLength / 2f));
+        spawnPosition = Random.insideUnitCircle.normalized;
+        spawnPosition *= Random.Range(GameManager.inst.MinDist, GameManager.inst.MaxDist);
+        goalAreaTransform.localPosition = new Vector3(spawnPosition.x, 3f, spawnPosition.y);
 
-        if (!IsInsideGoalArea(spawnPosition, goalAreaWidth, goalAreaLength, minDistance) &&
-            Vector3.Distance(spawnPosition, goalPosition) > minDistance)
-        {
-            goalTransform.localPosition = spawnPosition;
-            break;
-        }
+        spawnPosition = Random.insideUnitCircle.normalized;
+        spawnPosition *= Random.Range(GameManager.inst.MinDist, GameManager.inst.MaxDist);
+        goalTransform.localPosition = new Vector3(spawnPosition.x, 3f, spawnPosition.y);
 
-        if (i == maxAttempts - 1)
+        distanceCheck = Vector3.Distance(goalTransform.position, goalAreaTransform.position);
+        Debug.Log(touching + "inside of while");
+    if (distanceCheck > minimumDistance.x && distanceCheck > minimumDistance.y && distanceCheck > minimumDistance.z)
         {
-            Debug.LogWarning("Failed to find a valid spawn position outside the goal area");
-            goalTransform.localPosition = new Vector3(0f, 3f, 0f); // Default position
+            touching = false; // Break the loop if the objects are not touching
+                    Debug.Log(touching + "inside of if");
         }
     }
 
 
+    beginDistance = Vector3.Distance(envTransform.InverseTransformPoint(transform.position), envTransform.InverseTransformPoint(goalTransform.position));
+    prevBest = beginDistance;
+}
 
-        beginDistance = Vector3.Distance(envTransform.InverseTransformPoint(transform.position), envTransform.InverseTransformPoint(goalTransform.position));
-        prevBest = beginDistance;
-        // prevBest = Vector3.Distance(envTransform.TransformPoint(transform.position), envTransform.TransformPoint(goalTransform.position)); 
-    }
+
+    
 
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -142,7 +141,7 @@ public class DynamicPicknPlace : Agent
         }
         if (other.gameObject.tag == "Object" && hasObject == false)
         {
-            Debug.Log("Touched Obj");
+            //Debug.Log("Touched Obj");
             AddReward(+5f);
 
             hasObject = true;
