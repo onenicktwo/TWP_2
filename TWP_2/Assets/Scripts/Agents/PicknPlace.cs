@@ -138,6 +138,10 @@ public class PicknPlace : Agent
         {
             CollisionFail();
         }
+        if (other.gameObject.tag == "ArmParts")
+        {
+            CollisionFail();
+        }
         if (other.gameObject.tag == "Object" && hasObject == false)
         {
             Debug.Log("Touched Obj");

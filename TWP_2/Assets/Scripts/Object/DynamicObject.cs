@@ -29,7 +29,7 @@ public class DynamicObject : MonoBehaviour
     */
     private void OnTriggerEnter(Collider other)
     {
-        if ((other.gameObject.tag == "Wall" && pnp.hasObject) || other.gameObject.tag == "ArmParts")
+        if ((other.gameObject.tag == "Wall" && pnp.hasObject) || other.gameObject.tag == "ArmParts" || other.gameObject.tag == "Neck")
         {
             pnp.CollisionFail();
         }

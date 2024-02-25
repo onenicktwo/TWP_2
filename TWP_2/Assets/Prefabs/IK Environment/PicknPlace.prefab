@@ -1994,7 +1994,7 @@ GameObject:
   - component: {fileID: 281646732454865596}
   m_Layer: 0
   m_Name: Cube (2)
-  m_TagString: ArmParts
+  m_TagString: Neck
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -2008,8 +2008,8 @@ Transform:
   m_GameObject: {fileID: 6621912651918477754}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.2140224, z: 0.0078331}
-  m_LocalScale: {x: 0.24999002, y: 1.5999756, z: 0.25}
+  m_LocalPosition: {x: 0, y: 1.2617, z: 0.0078331}
+  m_LocalScale: {x: 0.24999002, y: 1.6953259, z: 0.25}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 6177405673430374286}
