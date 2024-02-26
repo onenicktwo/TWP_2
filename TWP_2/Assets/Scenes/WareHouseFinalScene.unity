@@ -532,7 +532,7 @@ PrefabInstance:
     - target: {fileID: 8278278600741480255, guid: 0e837c58a005c46489164c55517f5020, type: 3}
       propertyPath: m_Model
       value: 
-      objectReference: {fileID: 5022602860645237092, guid: d387c8915b985f84eb9a6f618ed8ebbe, type: 3}
+      objectReference: {fileID: 5022602860645237092, guid: c9205179a07a1504eb9515333321055a, type: 3}
     - target: {fileID: 8472570128934956526, guid: 0e837c58a005c46489164c55517f5020, type: 3}
       propertyPath: floorMeshRenderer
       value: 
