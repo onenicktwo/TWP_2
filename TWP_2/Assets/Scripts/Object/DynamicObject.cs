@@ -31,6 +31,7 @@ public class DynamicObject : MonoBehaviour
     {
         if ((other.gameObject.tag == "Wall" && pnp.hasObject) || other.gameObject.tag == "ArmParts" || other.gameObject.tag == "Neck")
         {
+            Debug.Log("Object Clip");
             pnp.CollisionFail();
         }
         if (other.gameObject.tag == "GoalArea")

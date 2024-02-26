@@ -62,7 +62,7 @@ public class PicknPlace : Agent
 
         spawnPosition = Random.insideUnitCircle.normalized;
         spawnPosition *= Random.Range(GameManager.inst.MinDist, GameManager.inst.MaxDist);
-        goalTransform.localPosition = new Vector3(spawnPosition.x, 3f, spawnPosition.y);
+        goalTransform.localPosition = new Vector3(spawnPosition.x, 3.1f, spawnPosition.y);
 
         distanceCheck = Vector3.Distance(goalTransform.position, goalAreaTransform.position);
         //Debug.Log(touching + "inside of while");
