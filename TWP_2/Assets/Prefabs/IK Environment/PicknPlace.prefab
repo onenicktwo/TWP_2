@@ -594,6 +594,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   timerDuration: 3
   pnp: {fileID: 0}
+  inFloor: 0
 --- !u!54 &2265209590043697880
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -1406,7 +1407,7 @@ Transform:
   m_GameObject: {fileID: 4534808072116013269}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.7, z: 0}
+  m_LocalPosition: {x: 0, y: -2.8, z: 0}
   m_LocalScale: {x: 10, y: 0.5, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2364,7 +2365,7 @@ Transform:
   m_GameObject: {fileID: 8062779311335163838}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 3, z: 35}
+  m_LocalPosition: {x: 0, y: 3.1, z: 35}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

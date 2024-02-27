@@ -46,36 +46,38 @@ public class PicknPlace : Agent
     public override void OnEpisodeBegin()
     {
         goalTransform.parent = envTransform;
-    hasObject = false;
-    transform.localPosition = new Vector3(0, 55, 0);
-    Vector3 minimumDistance = new Vector3(20.0f, 5.0f, 20.0f);
+        hasObject = false;
+        transform.localPosition = new Vector3(0, 55, 0);
+        Vector3 minimumDistance = new Vector3(20.0f, 5.0f, 20.0f);
 
-    Vector3 spawnPosition;
-    float distanceCheck;
-    bool touching = true;
-    //Debug.Log(touching + "inside of OnEpisodeBegin");
-    while (touching)
-    {
-        spawnPosition = Random.insideUnitCircle.normalized;
-        spawnPosition *= Random.Range(GameManager.inst.MinDist, GameManager.inst.MaxDist);
-        goalAreaTransform.localPosition = new Vector3(spawnPosition.x, 3f, spawnPosition.y);
+        Vector3 spawnPosition;
+        float distanceCheck;
+        bool touching = true;
+        //Debug.Log(touching + "inside of OnEpisodeBegin");
 
-        spawnPosition = Random.insideUnitCircle.normalized;
-        spawnPosition *= Random.Range(GameManager.inst.MinDist, GameManager.inst.MaxDist);
-        goalTransform.localPosition = new Vector3(spawnPosition.x, 3.1f, spawnPosition.y);
-
-        distanceCheck = Vector3.Distance(goalTransform.position, goalAreaTransform.position);
-        //Debug.Log(touching + "inside of while");
-    if (distanceCheck > minimumDistance.x && distanceCheck > minimumDistance.y && distanceCheck > minimumDistance.z)
+        while (touching)
         {
-            touching = false; // Break the loop if the objects are not touching
+            goalTransform.parent = envTransform;
+            dynObject.RestartEpisode();
+            spawnPosition = Random.insideUnitCircle.normalized;
+            spawnPosition *= Random.Range(GameManager.inst.MinDist, GameManager.inst.MaxDist);
+            goalAreaTransform.localPosition = new Vector3(spawnPosition.x, 3.1f, spawnPosition.y);
+
+            spawnPosition = Random.insideUnitCircle.normalized;
+            spawnPosition *= Random.Range(GameManager.inst.MinDist, GameManager.inst.MaxDist);
+            goalTransform.localPosition = new Vector3(spawnPosition.x, 3.1f, spawnPosition.y);
+
+            distanceCheck = Vector3.Distance(goalTransform.position, goalAreaTransform.position);
+            //Debug.Log(touching + "inside of while");
+            if (distanceCheck > minimumDistance.x && distanceCheck > minimumDistance.y && distanceCheck > minimumDistance.z)
+            {
+                touching = false; // Break the loop if the objects are not touching
                     //Debug.Log(touching + "inside of if");
+            }
+
         }
-    }
-
-
-    beginDistance = Vector3.Distance(envTransform.InverseTransformPoint(transform.position), envTransform.InverseTransformPoint(goalTransform.position));
-    prevBest = beginDistance;
+        beginDistance = Vector3.Distance(envTransform.InverseTransformPoint(transform.position), envTransform.InverseTransformPoint(goalTransform.position));
+        prevBest = beginDistance;
         // prevBest = Vector3.Distance(envTransform.TransformPoint(transform.position), envTransform.TransformPoint(goalTransform.position)); 
     }
 
@@ -136,10 +138,12 @@ public class PicknPlace : Agent
     {
         if (other.gameObject.tag == "Wall")
         {
+            AddReward(-2.0f);
             CollisionFail();
         }
         if (other.gameObject.tag == "ArmParts")
         {
+            AddReward(-4.0f);
             CollisionFail();
         }
         if (other.gameObject.tag == "Object" && hasObject == false)
@@ -183,8 +187,17 @@ public class PicknPlace : Agent
 
     public void CollisionFail()
     {
+        if(hasObject)
+        {
+            AddReward(-2.0f);
+        }
         floorMeshRenderer.material = failMat;
         EndEpisode();
+    }
+
+    public void InFloor()
+    {
+        AddReward(-0.5f);
     }
 
     public void GoalAreaReached()
