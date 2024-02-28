@@ -4,13 +4,11 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Goal
   - Wall
   - Object
-  - Ground
-  - GoalMat
-  - Bat
+  - ArmParts
   - GoalArea
+  - Neck
   layers:
   - Default
   - TransparentFX

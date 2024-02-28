@@ -37,31 +37,44 @@ public class DynamicPicknPlace : Agent
     private float prevBest;
     private const float stepPenalty = -0.0001f;
 
-
-    private void Start()
-    {
-        dynObject = goalTransform.GetComponent<DynamicObject>();
-        dynObject.dynPnP = this;
-    }
     public override void OnEpisodeBegin()
     {
-        goalTransform.parent = envTransform;
-        hasObject = false;
-        transform.localPosition = new Vector3(0, 55, 0);
 
-        Vector3 spawnPosition = Random.insideUnitCircle.normalized;
+    goalTransform.parent = envTransform;
+    hasObject = false;
+    transform.localPosition = new Vector3(0, 55, 0);
+    Vector3 minimumDistance = new Vector3(20.0f, 5.0f, 20.0f);
+
+    Vector3 spawnPosition;
+    float distanceCheck;
+    bool touching = true;
+    Debug.Log(touching + "inside of OnEpisodeBegin");
+    while (touching)
+    {
+        spawnPosition = Random.insideUnitCircle.normalized;
         spawnPosition *= Random.Range(GameManager.inst.MinDist, GameManager.inst.MaxDist);
         goalAreaTransform.localPosition = new Vector3(spawnPosition.x, 3f, spawnPosition.y);
 
-        dynObject.RestartEpisode();
         spawnPosition = Random.insideUnitCircle.normalized;
         spawnPosition *= Random.Range(GameManager.inst.MinDist, GameManager.inst.MaxDist);
         goalTransform.localPosition = new Vector3(spawnPosition.x, 3f, spawnPosition.y);
 
-        beginDistance = Vector3.Distance(envTransform.InverseTransformPoint(transform.position), envTransform.InverseTransformPoint(goalTransform.position));
-        prevBest = beginDistance;
-        // prevBest = Vector3.Distance(envTransform.TransformPoint(transform.position), envTransform.TransformPoint(goalTransform.position)); 
+        distanceCheck = Vector3.Distance(goalTransform.position, goalAreaTransform.position);
+        Debug.Log(touching + "inside of while");
+    if (distanceCheck > minimumDistance.x && distanceCheck > minimumDistance.y && distanceCheck > minimumDistance.z)
+        {
+            touching = false; // Break the loop if the objects are not touching
+                    Debug.Log(touching + "inside of if");
+        }
     }
+
+
+    beginDistance = Vector3.Distance(envTransform.InverseTransformPoint(transform.position), envTransform.InverseTransformPoint(goalTransform.position));
+    prevBest = beginDistance;
+}
+
+
+    
 
     public override void CollectObservations(VectorSensor sensor)
     {
@@ -128,7 +141,7 @@ public class DynamicPicknPlace : Agent
         }
         if (other.gameObject.tag == "Object" && hasObject == false)
         {
-            Debug.Log("Touched Obj");
+            //Debug.Log("Touched Obj");
             AddReward(+5f);
 
             hasObject = true;
@@ -186,5 +199,14 @@ public class DynamicPicknPlace : Agent
             prevBest = beginDistance;
             // prevBest = Vector3.Distance(envTransform.TransformPoint(transform.position), envTransform.TransformPoint(goalTransform.position));
         }
+    }
+    private bool IsInsideGoalArea(Vector3 position, float width, float length, float minDistance)
+    {
+        // Check if the position is inside the goal area based on its dimensions
+        if (Mathf.Abs(position.x) < width / 2f - minDistance && Mathf.Abs(position.z) < length / 2f - minDistance)
+        {
+            return true;
+        }
+        return false;
     }
 }

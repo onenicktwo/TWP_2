@@ -1,0 +1,56 @@
+{
+    "RobotArm": {
+        "checkpoints": [
+            {
+                "steps": 499987,
+                "file_path": "results\\DynPnp16\\RobotArm\\RobotArm-499987.onnx",
+                "reward": 1.8233772310525624,
+                "creation_time": 1708485539.410053,
+                "auxillary_file_paths": [
+                    "results\\DynPnp16\\RobotArm\\RobotArm-499987.pt"
+                ]
+            },
+            {
+                "steps": 999967,
+                "file_path": "results\\DynPnp16\\RobotArm\\RobotArm-999967.onnx",
+                "reward": 1.7081006519697808,
+                "creation_time": 1708485824.0124373,
+                "auxillary_file_paths": [
+                    "results\\DynPnp16\\RobotArm\\RobotArm-999967.pt"
+                ]
+            },
+            {
+                "steps": 1499985,
+                "file_path": "results\\DynPnp16\\RobotArm\\RobotArm-1499985.onnx",
+                "reward": 2.4958217293024063,
+                "creation_time": 1708486111.007204,
+                "auxillary_file_paths": [
+                    "results\\DynPnp16\\RobotArm\\RobotArm-1499985.pt"
+                ]
+            },
+            {
+                "steps": 1500511,
+                "file_path": "results\\DynPnp16\\RobotArm\\RobotArm-1500511.onnx",
+                "reward": 1.6430113725364208,
+                "creation_time": 1708486115.3368564,
+                "auxillary_file_paths": [
+                    "results\\DynPnp16\\RobotArm\\RobotArm-1500511.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 1500511,
+            "file_path": "results\\DynPnp16\\RobotArm.onnx",
+            "reward": 1.6430113725364208,
+            "creation_time": 1708486115.3368564,
+            "auxillary_file_paths": [
+                "results\\DynPnp16\\RobotArm\\RobotArm-1500511.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.1.2+cu118"
+    }
+}

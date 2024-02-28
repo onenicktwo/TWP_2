@@ -1,0 +1,65 @@
+{
+    "RobotArm": {
+        "checkpoints": [
+            {
+                "steps": 3046713,
+                "file_path": "results\\DynPnp17\\RobotArm\\RobotArm-3046713.onnx",
+                "reward": null,
+                "creation_time": 1708488657.4978366,
+                "auxillary_file_paths": [
+                    "results\\DynPnp17\\RobotArm\\RobotArm-3046713.pt"
+                ]
+            },
+            {
+                "steps": 999974,
+                "file_path": "results\\DynPnp17\\RobotArm\\RobotArm-999974.onnx",
+                "reward": 7.271594506043654,
+                "creation_time": 1708488814.0856366,
+                "auxillary_file_paths": [
+                    "results\\DynPnp17\\RobotArm\\RobotArm-999974.pt"
+                ]
+            },
+            {
+                "steps": 1499885,
+                "file_path": "results\\DynPnp17\\RobotArm\\RobotArm-1499885.onnx",
+                "reward": 6.995150217195836,
+                "creation_time": 1708489074.1837435,
+                "auxillary_file_paths": [
+                    "results\\DynPnp17\\RobotArm\\RobotArm-1499885.pt"
+                ]
+            },
+            {
+                "steps": 1999617,
+                "file_path": "results\\DynPnp17\\RobotArm\\RobotArm-1999617.onnx",
+                "reward": null,
+                "creation_time": 1708489343.9281898,
+                "auxillary_file_paths": [
+                    "results\\DynPnp17\\RobotArm\\RobotArm-1999617.pt"
+                ]
+            },
+            {
+                "steps": 2346363,
+                "file_path": "results\\DynPnp17\\RobotArm\\RobotArm-2346363.onnx",
+                "reward": 8.337473659804374,
+                "creation_time": 1708489539.6966224,
+                "auxillary_file_paths": [
+                    "results\\DynPnp17\\RobotArm\\RobotArm-2346363.pt"
+                ]
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 2346363,
+            "file_path": "results\\DynPnp17\\RobotArm.onnx",
+            "reward": 8.337473659804374,
+            "creation_time": 1708489539.6966224,
+            "auxillary_file_paths": [
+                "results\\DynPnp17\\RobotArm\\RobotArm-2346363.pt"
+            ]
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.3.0",
+        "mlagents_version": "0.30.0",
+        "torch_version": "2.1.2+cu118"
+    }
+}
